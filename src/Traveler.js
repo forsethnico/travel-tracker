@@ -12,10 +12,6 @@ class Traveler {
   getAllTrips(trips) {
     return trips.filter((trip) => trip.userID === this.id);
   }
-  getPendingTrips(trips) {
-    let userTrips = this.getAllTrips(trips);
-    return userTrips.filter((trip) => trip.status === "pending");
-  }
 
   getAllExpenses(trips, destinations) {
     let userTrips = this.getAllTrips(trips);

@@ -50,18 +50,7 @@ describe('Traveler', () => {
     }]);
   });
 
-  it ('should have a method to get all pending trips for a given traveler', () => {
-    expect(traveler2.getPendingTrips(trips)).to.deep.equal([{
-        id: 171,
-        userID: 2,
-        destinationID: 43,
-        travelers: 1,
-        date: "2020/12/27",
-        duration: 18,
-        status: "pending",
-        suggestedActivities: [],
-    }])
-  })
+
 
   it('should have a method to get all trip expenses for a given user', () => {
     expect(traveler2.getAllExpenses(trips, destinations)).to.equal(13172.5)
