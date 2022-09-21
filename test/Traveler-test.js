@@ -50,11 +50,8 @@ describe('Traveler', () => {
     }]);
   });
 
-
-
   it('should have a method to get all trip expenses for a given user', () => {
     expect(traveler2.getAllExpenses(trips, destinations)).to.equal(13172.5)
   });
-
 
 });
