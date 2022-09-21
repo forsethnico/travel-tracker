@@ -1,3 +1,5 @@
+import Trip from "./Trip";
+
 class Traveler {
   constructor(user) {
     this.id = user.id;
@@ -10,24 +12,18 @@ class Traveler {
   }
 
   getAllTrips(trips) {
-    return trips.filter((trip) => trip.userID === this.id);
+    let userTrips = trips.filter((trip) => trip.userID === this.id);
+    return userTrips.map((trip) => new Trip(trip));
   }
 
   getAllExpenses(trips, destinations) {
     let userTrips = this.getAllTrips(trips);
-    let totalCost = userTrips.reduce((sum, trip) => {
-      let foundDestination = destinations.find(
-        (destination) => destination.id === trip.destinationID
-      );
-      let totalLodgingCost =
-        foundDestination.estimatedLodgingCostPerDay * trip.duration;
-      let totalFlightCost =
-        foundDestination.estimatedFlightCostPerPerson * trip.travelers;
-      let tripCost = totalFlightCost + totalLodgingCost  
-      sum += (tripCost + (tripCost* 0.1))
+    let totalExpenses = userTrips.reduce((sum, trip) => {
+      let tripCost = trip.getTripCost(destinations);
+      sum += tripCost;
       return sum;
     }, 0);
-    return totalCost;
+    return totalExpenses;
   }
 }
 

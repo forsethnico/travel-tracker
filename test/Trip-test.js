@@ -43,8 +43,8 @@ describe('Trip', () => {
     expect(trip1.suggestedActivities).to.deep.equal([])
   });
 
-//   it('should have a method to calculate individual trip cost for a user', () => {
-//     expect(trip1.getTripCost(traveler1, destinations)).to.equal()
-//   });
+  it('should have a method to calculate individual trip cost', () => {
+    expect(trip1.getTripCost(destinations)).to.equal(2183.50)
+  });
 
 })

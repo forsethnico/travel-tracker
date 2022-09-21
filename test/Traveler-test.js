@@ -1,32 +1,32 @@
-import chai from 'chai';
+import chai from "chai";
 const expect = chai.expect;
-import Traveler from "../src/Traveler"
-import {travelers, trips, destinations} from "./Traveler-data.js"
+import Traveler from "../src/Traveler";
+import { travelers, trips, destinations } from "./Traveler-data.js";
 
-describe('Traveler', () => {
+describe("Traveler", () => {
   let traveler1, traveler2;
 
   beforeEach(() => {
-    traveler1 = new Traveler(travelers[0])
-    traveler2 = new Traveler(travelers[1])
-  })
-  it('should have a traveler id', () => {
+    traveler1 = new Traveler(travelers[0]);
+    traveler2 = new Traveler(travelers[1]);
+  });
+  it("should have a traveler id", () => {
     expect(traveler1.id).to.equal(1);
   });
 
-  it('should have a traveler name', () => {
+  it("should have a traveler name", () => {
     expect(traveler1.name).to.equal("Ham Leadbeater");
   });
 
-  it('should have a traveler type', () => {
+  it("should have a traveler type", () => {
     expect(traveler1.travelerType).to.equal("relaxer");
   });
 
-  it('should have a method to get the travelers first name', () => {
-    expect(traveler1.getFirstName()).to.equal("Ham")
+  it("should have a method to get the travelers first name", () => {
+    expect(traveler1.getFirstName()).to.equal("Ham");
   });
 
-  it('should have a method to get all traveler trips for a given traveler', () => {
+  it("should have a method to get all traveler trips for a given traveler", () => {
     expect(traveler2.getAllTrips(trips)).to.deep.equal([
       {
         id: 116,
@@ -47,11 +47,11 @@ describe('Traveler', () => {
         duration: 18,
         status: "pending",
         suggestedActivities: [],
-    }]);
+      },
+    ]);
   });
 
-  it('should have a method to get all trip expenses for a given user', () => {
-    expect(traveler2.getAllExpenses(trips, destinations)).to.equal(13172.5)
+  it("should have a method to get all trip expenses for a given user", () => {
+    expect(traveler2.getAllExpenses(trips, destinations)).to.equal(13172.5);
   });
-
 });
