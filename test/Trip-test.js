@@ -1,18 +1,13 @@
 import chai from 'chai';
 const expect = chai.expect;
-import Traveler from "../src/Traveler"
 import Trip from "../src/Trip"
-import {travelers, trips, destinations} from "./Traveler-data.js"
+import {trips, destinations} from "./Traveler-data.js"
 
 describe('Trip', () => {
-  let traveler1, traveler2;
-  let trip1, trip2;
+  let trip1;
 
   beforeEach(() => {
-    traveler1 = new Traveler(travelers[0])
-    traveler2 = new Traveler(travelers[1])
     trip1 = new Trip(trips[0])
-    trip2 = new Trip(trips[1])
   })
 
   it('should have a trip id', () => {
