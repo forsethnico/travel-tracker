@@ -4,13 +4,34 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Webpack Starter Kit</title>
+  <title>Go Nomad</title>
 </head>
 <body>
-  <img src="./images/turing-logo.png" alt="turing logo">
-  
-  <!-- Do not include the scripts.js or class files here - it is done by the webpack server -->
-  <script src="bundle.js"></script>
+  <nav>
+    <h1 class="main-title">Go Nomad</h1>
+    <button class = "button" id="backToDashboard">BACK TO DASHBOARD</button>
+    <button class = "button " id="changeDate">CHANGE DATE</button>
+    <button class = "button " id="addTrip">BOOK NEW TRIP</button>
+    <button class = "button " id="addDestination">ADD DESTINATION</button>
+    <button class = "button " id="logout">LOG OUT</button>
+  </nav>  
+  <section class = "login-page">
+    <form class = "login-form">
+      <h2>WELCOME TO "GO NOMAD"! PLEASE LOGIN</h2>
+      <label for="username">Username (traveler#)</label>
+      <input type="text" id="username" name="username" placeholder="Username" required minlength="9" maxlength="10" size = "15">
+      <label for="password">Password (travel)</label>
+      <input type="text" id="password" name="password" placeholder="Password" required size = "15">
+      <button class = "login-button" id="loginBtn" type="submit" value="Sign in">LOG IN</button>
+      <p class="error-message" id="errorMessage"></p>
+    </form>
+  </section>
 
+
+
+
+  
+  <img src="./images/turing-logo.png" alt="turing logo">
+  <script src="bundle.js"></script>
 </body>
 </html>
