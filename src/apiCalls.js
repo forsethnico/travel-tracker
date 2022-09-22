@@ -12,9 +12,16 @@ const fetchTraveler = (id) => {
 
 const fetchTravelData = (detail) => {
   return fetch(`http://localhost:3001/api/v1/${detail}`)
-    .then((response) => response.json())
-    .catch((error) => console.log(`API error: ${error.message}`));
+    .then((response) => {
+        if(!response.ok){
+            throw new Error("Issue loading information. Please refresh page.")
+        } else {
+        return response.json()
+        }
+    })
+    .catch((error) => errorMessage.innerHTML = `API error: ${error.message}`);
 };
+
 
 const getTravelData = () => {
   const result = Promise.all([

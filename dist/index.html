@@ -30,7 +30,7 @@
             size="15"
           />
           <button
-            class="login-button"
+            class="button"
             id="loginBtn"
             type="submit"
             value="Sign in"
@@ -42,12 +42,12 @@
         </form>
       </section>
       <section class="user-view">
-        <button class="button" id="addDestination">ADD DESTINATION</button>
-        <button class="button" id="logout">logout.</button>
+        <button class="button" id="addDestinationBtn">ADD DESTINATION</button>
+        <button class="button" id="logoutBtn">logout.</button>
       </section>  
     </nav>
     <section class="dashboard-page hidden">
-      <h1 class="dashboard-title">TRAVELER DASHBOARD</h1>
+      <h1>TRAVELER DASHBOARD</h1>
       <section class = "total-expenses">
         <h3>TOTAL AMOUNT SPENT</h3>
         <p class = "total-cost"></p>
@@ -65,8 +65,8 @@
         <input placeholder="destination" aria-label="destination-select" list="locations" name="myDestinations" class="destination-dropdown" id="destination" required>
         <datalist id="locations"></datalist>
         <input type="date" placeholder="start date" id="tripStart" aria-label="calendar-select" name ="arrive" value ="2022-09-27" min="2020-01-03" required>
-        <input type="number" placeholder="days" name ="duration" value ="" min="1" required>
-        <input type="number" placeholder= "guests" name="travelers" min="1" value="" required>
+        <input type="number" placeholder="days" id= "duration" name ="duration" value ="" min="1" required>
+        <input type="number" placeholder= "guests" name="travelers" min="1" value="" id="travelers" required>
         <button type="submit" name="button" id="estimateButton">Estimate Cost</button>
         <button type="submit" name="button" id="bookButton">Book it!</button>
       </section>
