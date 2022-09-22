@@ -16,6 +16,11 @@ class Traveler {
     return userTrips.map((trip) => new Trip(trip));
   }
 
+  getPendingTrips(trips) {
+    let userTrips =  this.getAllTrips(trips)
+    return userTrips.filter(trip => trip.status === "pending")
+  }
+
   getAllExpenses(trips, destinations) {
     let userTrips = this.getAllTrips(trips);
     let totalExpenses = userTrips.reduce((sum, trip) => {
