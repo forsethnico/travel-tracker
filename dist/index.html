@@ -9,7 +9,7 @@
     <title>Go Nomad.</title>
   </head>
   <body>
-    <section class="login-container">
+    <section class="login-container hidden">
       <img src="./images/logo_transparent.png" alt="go nomad logo" id="goNomadLogo-trans">
       <h1>Welcome! <br>Login to start your travels!</h1>
       <form class="login-form">
@@ -39,24 +39,24 @@
         >
           enter.
         </button>
-        <section class="greeting"></section>
         <section class="error-message"></section>
       </form>
     </section>
-    <section class="nav-view hidden">
-      <img src="./images/logo_transparent.png" alt="go nomad logo transparent" id="goNomadLogo-trans" />
-      <button class="button" id="addDestinationBtn">add destination.</button>
-      <button class="button" id="dashboard">dashboard.</button>
-      <button class="button" id="changeDate">change date.</button>
-      <button class="button" id="logoutBtn">logout.</button>
+    <section class="nav-view">
+      <div>
+        <img src="./images/logo_transparent.png" alt="go nomad logo transparent" id="goNomadLogo-trans" />
+      </div>
+      <div class ="nav-buttons">
+        <button class="button" id="bookTrip">book trip.</button>
+        <button class="button" id="addDestinationBtn">add destination.</button>
+        <button class="button" id="logoutBtn">logout.</button>
+      </div>  
     </section>  
-    <section class="dashboard-page hidden">
-      <h1>TRAVELER DASHBOARD</h1>
+    <section class="dashboard-page">
+      <h2 class="greeting"></h2>
       <section class = "total-expenses">
-        <h3>TOTAL AMOUNT SPENT</h3>
-        <p class = "total-cost"></p>
       </section>
-      <section class ="my-trips-account">
+      <section class ="my-trips-container">
         <select class="trip-type">
           <option value="all-trips">all trips</option>
           <option value="pending-trips">pending trips</option>

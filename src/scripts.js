@@ -36,7 +36,7 @@ const totalExpenses = document.querySelector(".total-expenses")
 const createTrip = document.querySelector(".create-trip-page")
 const tripDetails = document.querySelector(".trip-details")
 const tripEstimate = document.querySelector(".cost-estimate")
-const userTrips = document.querySelector(".user-trips-display")
+const myTrips = document.querySelector(".my-trips-container")
 
 //Event Listeners
 window.addEventListener("load", getAllTravelData)
@@ -55,7 +55,10 @@ function getAllTravelData () {
         destinations = destinationData.map(destination => {
             return new Destination(destination)
         })
+        //Remove when login page is enabled
+        currentTraveler = new Traveler(allTravelers[9])
         setCurrentDate()
+        showDashboard()
     })
 }
 
@@ -105,7 +108,9 @@ function logIn(event) {
 }
 
 function showDashboard() {
-    show(displayUserWelcome)
+    displayUserWelcome()
+    displayTotalExpenses()
+    displayUserTrips()
 }
 
 function showLoginPage() {
@@ -115,22 +120,24 @@ function showLoginPage() {
 }
 
 function displayUserWelcome() {
-    greeting.innerText = `Hello, ${currentTraveler.getFirstName()}!`
+    greeting.innerText = `${currentTraveler.getFirstName()}'s dashboard.`
 }
 
 function displayTotalExpenses() {
     let expenses = currentTraveler.getAllExpenses(trips,destinations)
-    totalExpenses.innerHTML = `$${expenses}`
+    totalExpenses.innerHTML = `Total Amount Spent: <br>$${expenses}`
 }
 
 function displayUserTrips() {
-    let myTrips = currentTraveler.getAllTrips(trips)
-    userTrips.innerHTML = ""
+    let userTrips = currentTraveler.getAllTrips(trips)
+    myTrips.innerHTML = ""
     if(userTrips.length > 0) {
-        myTrips.forEach(trip => {
-            userTrips.innerHTML += `<section class = "user-trip">
+        userTrips.forEach(trip => {
+            let destinationObj = trip.getDestinationInfo(destinations)
+            myTrips.innerHTML += `<section class = "user-trip">
             <h4>TRIP DATE: ${trip.date}</h4>
-            <img src="
+            <h4>${destinationObj.destination}</h4>
+            <img class = "trip-photo" src=${destinationObj.image}/>
             </section>`
         })
     }

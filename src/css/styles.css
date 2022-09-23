@@ -7,15 +7,16 @@ body {
   background-size: cover;
   text-align: center;
   color: white;
-  display: flex;
   justify-content: center;
 }
 
-nav {
+.nav-view {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  width: 100%;
+  align-items: top;
+}
+.nav-buttons {
+  margin: 3vh 3vw 3vh 3vw;
 }
 
 h1 {
@@ -40,10 +41,47 @@ height: 40vh;
 border-radius: 30px;
 padding-bottom: 7vh;
 padding-top: 3vh;
-margin: 10vh 12vw 0vh 12vw;
+margin: 10vh 12vw 0vh 30vw;
 }
 
+.button {
+border-radius: 4px;
+margin: 0vh 1vw 0vh 1vw;
+display: inline-block;
+cursor: pointer;
+background: #7B857B;
+color: white;
+outline: 0;
+border: #262D25 solid 2px;
+}
 
+.button:hover {
+  background: #5C551F;
+  color: white;
+}
+
+.dashboard-page {
+display: flex;
+flex-direction: column;
+background-color: rgba(64, 85, 89, 0.8);
+width: 80vw;
+height: 80vh;
+border-radius: 30px;
+padding-bottom: 7vh;
+padding-top: 1vh;
+margin: 10vh 12vw 0vh 10vw;
+}
+
+.my-trips-container {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  gap: 7px 7px;
+  margin: 2vh 4vw 2vh 4vw;
+}
+.trip-photo {
+  width: 95%;
+  margin-top: 2vh;
+}
 
 .hidden {
   display: none;

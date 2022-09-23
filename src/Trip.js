@@ -22,6 +22,12 @@ class Trip {
     let tripCost = expenses + expenses * 0.1;
     return parseFloat(tripCost.toFixed(2));
   }
+
+  getDestinationInfo(destinations) {
+    return destinations.find(
+      (destination) => destination.id === this.destinationID
+    );
+  }
 }
 
 export default Trip;
