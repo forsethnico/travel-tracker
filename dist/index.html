@@ -1,51 +1,55 @@
 <!DOCTYPE html>
-<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Go Nomad</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono&display=swap" rel="stylesheet">  
+    <title>Go Nomad.</title>
   </head>
-  <section class="top-container">
-    <nav>
-      <h1 class="main-title">Go Nomad.</h1>
-      <section class="login-container">
-        <form class="login-form">
-          <input
-            type="text"
-            id="username"
-            name="username"
-            placeholder="username"
-            required
-            minlength="9"
-            maxlength="10"
-            size="15"
-          />
-          <input
-            type="text"
-            id="password"
-            name="password"
-            placeholder="password"
-            required
-            size="15"
-          />
-          <button
-            class="button"
-            id="loginBtn"
-            type="submit"
-            value="Sign in"
-          >
-            enter.
-          </button>
-          <section class="greeting"></section>
-          <section class="error-message"></section>
-        </form>
-      </section>
-      <section class="user-view">
-        <button class="button" id="addDestinationBtn">ADD DESTINATION</button>
-        <button class="button" id="logoutBtn">logout.</button>
-      </section>  
-    </nav>
+  <body>
+    <section class="login-container">
+      <img src="./images/logo_transparent.png" alt="go nomad logo" id="goNomadLogo-trans">
+      <h1>Welcome! <br>Login to start your travels!</h1>
+      <form class="login-form">
+        <input
+          type="text"
+          id="username"
+          name="username"
+          placeholder="username"
+          required
+          minlength="9"
+          maxlength="10"
+          size="15"
+        />
+        <input
+          type="text"
+          id="password"
+          name="password"
+          placeholder="password"
+          required
+          size="15"
+        />
+        <button
+          class="button"
+          id="loginBtn"
+          type="submit"
+          value="Sign in"
+        >
+          enter.
+        </button>
+        <section class="greeting"></section>
+        <section class="error-message"></section>
+      </form>
+    </section>
+    <section class="nav-view hidden">
+      <img src="./images/logo_transparent.png" alt="go nomad logo transparent" id="goNomadLogo-trans" />
+      <button class="button" id="addDestinationBtn">add destination.</button>
+      <button class="button" id="dashboard">dashboard.</button>
+      <button class="button" id="changeDate">change date.</button>
+      <button class="button" id="logoutBtn">logout.</button>
+    </section>  
     <section class="dashboard-page hidden">
       <h1>TRAVELER DASHBOARD</h1>
       <section class = "total-expenses">
@@ -76,7 +80,6 @@
   <section class="bottom-container">
     <section class="user-trips-display hidden"></section>
   </section>
-  <img src="./images/turing-logo.png" alt="turing logo" />
   <script src="bundle.js"></script>
   </body>
 </html>

@@ -7,7 +7,6 @@ class Destination {
         this.image = destinations.image
         this.alt = destinations.alt
     }
-
 }
 
 export default Destination
