@@ -47,7 +47,7 @@
         <img src="./images/logo_transparent.png" alt="go nomad logo transparent" id="goNomadLogo-trans" />
       </div>
       <div class ="nav-buttons">
-        <button class="button" id="bookTrip">book trip.</button>
+        <button class="button" id="bookTripBtn">book trip.</button>
         <button class="button" id="addDestinationBtn">add destination.</button>
         <button class="button" id="logoutBtn">logout.</button>
       </div>  
@@ -56,11 +56,15 @@
       <h2 class="greeting"></h2>
       <section class = "total-expenses">
       </section>
+      <!-- <section class="trip-type">
+        <form>
+          <input type = "checkbox" id ="allTrips" value="all">
+          <label for="allTrips">All Trips</label>
+          <input type = "checkbox" id="pendingTrips" value="pending">
+          <label for="pendingTrips">Pending</label>
+        </form>
+      </section> -->
       <section class ="my-trips-container">
-        <select class="trip-type">
-          <option value="all-trips">all trips</option>
-          <option value="pending-trips">pending trips</option>
-        </select>
       </section>
     </section>
     <section class = "create-trip-page hidden">
@@ -77,9 +81,6 @@
       <section class="cost-estimate"></section>
     </section>
   </section> 
-  <section class="bottom-container">
-    <section class="user-trips-display hidden"></section>
-  </section>
   <script src="bundle.js"></script>
   </body>
 </html>

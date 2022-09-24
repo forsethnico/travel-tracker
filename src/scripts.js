@@ -28,15 +28,12 @@ const usernameInput = document.querySelector("#username");
 const passwordInput = document.querySelector("#password");
 //Buttons
 const loginBtn = document.querySelector("#loginBtn");
-const logoutBtn = document.querySelector("#logoutBtn");
-const destinationBtn = document.querySelector("#addDestinationBtn");
+const logoutBtn = document.querySelector("#logoutBtn")
+const navButtons = document.querySelector(".nav-buttons");
 const bookBtn = document.querySelector("#bookButton");
 const estimateBtn = document.querySelector("#estimateButton");
 //Sections
-const topContainer = document.querySelector(".top-container");
-const bottomContainer = document.querySelector(".bottom-container");
 const loginContainer = document.querySelector(".login-container");
-const dashboard = document.querySelector(".dashboard-page");
 const totalExpenses = document.querySelector(".total-expenses");
 const createTrip = document.querySelector(".create-trip-page");
 const tripDetails = document.querySelector(".trip-details");
@@ -46,7 +43,7 @@ const myTrips = document.querySelector(".my-trips-container");
 //Event Listeners
 window.addEventListener("load", getAllTravelData);
 loginBtn.addEventListener("click", logIn);
-// logoutBtn.addEventListener("click", logOut)
+logoutBtn.addEventListener("click", logOut);
 
 //Functions
 function getAllTravelData() {
@@ -61,7 +58,7 @@ function getAllTravelData() {
       return new Destination(destination);
     });
     //Remove when login page is enabled
-    currentTraveler = new Traveler(allTravelers[10]);
+    currentTraveler = new Traveler(allTravelers[6]);
     setCurrentDate();
     showDashboard();
   });
@@ -112,16 +109,22 @@ function logIn(event) {
   }
 }
 
+function logOut() {
+    currentTraveler = null;
+    hide(dashboard);
+    show(loginContainer);
+    hide(navButtons);
+    usernameInput.value = "";
+    passwordInput.value = "";
+    errorMessage.innerText = "";
+}
+
 function showDashboard() {
   displayUserWelcome();
   displayTotalExpenses();
   displayUserTrips();
-}
-
-function showLoginPage() {
-  usernameInput.value = "";
-  passwordInput.value = "";
-  hide(logoutBtn);
+  show(navButtons);
+  hide(loginContainer);
 }
 
 function displayUserWelcome() {
