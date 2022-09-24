@@ -28,7 +28,7 @@ class Traveler {
       sum += tripCost;
       return sum;
     }, 0);
-    return totalExpenses;
+    return parseFloat(totalExpenses.toFixed(2));
   }
 }
 

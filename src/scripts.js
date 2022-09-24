@@ -28,13 +28,18 @@ const usernameInput = document.querySelector("#username");
 const passwordInput = document.querySelector("#password");
 //Buttons
 const loginBtn = document.querySelector("#loginBtn");
-const logoutBtn = document.querySelector("#logoutBtn")
+const logoutBtn = document.querySelector("#logoutBtn");
+const destinationBtn = document.querySelector("#addDestinationBtn");
+const goBookTripBtn = document.querySelector("#bookTripBtn");
+const goDashboardBtn = document.querySelector("#goToDashboardBtn");
 const navButtons = document.querySelector(".nav-buttons");
 const bookBtn = document.querySelector("#bookButton");
 const estimateBtn = document.querySelector("#estimateButton");
 //Sections
 const loginContainer = document.querySelector(".login-container");
 const totalExpenses = document.querySelector(".total-expenses");
+const dashboard = document.querySelector(".dashboard-page");
+const navView = document.querySelector(".nav-view");
 const createTrip = document.querySelector(".create-trip-page");
 const tripDetails = document.querySelector(".trip-details");
 const tripEstimate = document.querySelector(".cost-estimate");
@@ -44,6 +49,9 @@ const myTrips = document.querySelector(".my-trips-container");
 window.addEventListener("load", getAllTravelData);
 loginBtn.addEventListener("click", logIn);
 logoutBtn.addEventListener("click", logOut);
+goDashboardBtn.addEventListener("click", showDashboard);
+goBookTripBtn.addEventListener("click", showBookTrip);
+estimateBtn.addEventListener("click", estimateCost)
 
 //Functions
 function getAllTravelData() {
@@ -60,7 +68,7 @@ function getAllTravelData() {
     //Remove when login page is enabled
     currentTraveler = new Traveler(allTravelers[6]);
     setCurrentDate();
-    showDashboard();
+    showBookTrip();
   });
 }
 
@@ -82,6 +90,13 @@ function show(element) {
   element.classList.remove("hidden");
 }
 
+function showMainPage() {
+  show(loginContainer);
+  hide(dashboard);
+  hide(navView);
+  hide(createTrip);
+}
+
 function logIn(event) {
   event.preventDefault();
   const username = usernameInput.value;
@@ -92,7 +107,7 @@ function logIn(event) {
   if (password !== "travel") {
     errorMessage.innerText = `Invalid user password.`;
   }
-  let id = username.slice(8, usernameInput.value.length);
+  const id = username.slice(8, usernameInput.value.length);
   if (id.startsWith(0)) {
     errorMessage.innerText = `Invalid user name.`;
   } else if (id) {
@@ -110,21 +125,39 @@ function logIn(event) {
 }
 
 function logOut() {
-    currentTraveler = null;
-    hide(dashboard);
-    show(loginContainer);
-    hide(navButtons);
-    usernameInput.value = "";
-    passwordInput.value = "";
-    errorMessage.innerText = "";
+  hide(dashboard);
+  hide(navButtons);
+  hide(createTrip);
+  show(loginContainer);
+  currentTraveler = null;
+  usernameInput.value = "";
+  passwordInput.value = "";
+  errorMessage.innerText = "";
 }
 
 function showDashboard() {
+  hide(loginContainer);
+  hide(createTrip);
+  hide(goDashboardBtn);
+  hide(loginContainer);
+  hide(createTrip);
+  show(bookTripBtn);
+  show(destinationBtn);
+  show(logoutBtn);
   displayUserWelcome();
   displayTotalExpenses();
   displayUserTrips();
-  show(navButtons);
+}
+
+function showBookTrip() {
+  hide(bookTripBtn);
+  show(goDashboardBtn);
+  show(logoutBtn);
+  show(createTrip);
   hide(loginContainer);
+  hide(dashboard);
+  hide(bookBtn);
+  showDestinations();
 }
 
 function displayUserWelcome() {
@@ -132,12 +165,12 @@ function displayUserWelcome() {
 }
 
 function displayTotalExpenses() {
-  let expenses = currentTraveler.getAllExpenses(trips, destinations);
+  const expenses = currentTraveler.getAllExpenses(trips, destinations);
   totalExpenses.innerHTML = `Total Amount Spent: <br>$${expenses}`;
 }
 
 function displayUserTrips() {
-  let userTrips = currentTraveler.getAllTrips(trips);
+  const userTrips = currentTraveler.getAllTrips(trips);
   myTrips.innerHTML = "";
   if (userTrips.length > 0) {
     userTrips.forEach((trip) => {
@@ -151,3 +184,29 @@ function displayUserTrips() {
     });
   }
 }
+
+function showDestinations() {
+    const destinationSelection = document.querySelector(".destination-dropdown");
+    let destinationOptions = destinations.map((destination) => {
+      return `<option value="${destination.id}">${destination.destination}</option>`;
+    });
+    destinationSelection.innerHTML = `${destinationOptions}`;
+  }
+  
+
+function estimateCost() {
+  const selectedDate = getDate(startDate.value);
+  const numTravelers = travelerChoice.value;
+  const selectedDuration = durationChoice.value;
+  const selectedDestination = destinationChoice.value;
+  let tripObj = {
+    destinationID: selectedDestination,
+    duration: selectedDuration,
+    date: selectedDate,
+    travelers: numTravelers,
+  };
+  const newTrip = new Trip(tripObj);
+  const cost = newTrip.getTripCost(destinations)
+  tripEstimate.innerHTML = `$${cost} (including 10% travel agent fee)`
+}
+
