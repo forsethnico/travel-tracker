@@ -73,9 +73,12 @@
       <section class="trip-details">
         <select placeholder="destination" id="destination" aria-label="destination-select" class = "destination-dropdown"></select>
         <input type="date" placeholder="start date" id="tripStart" aria-label="calendar-select" name ="arrive" value ="2022-09-27" min="2020-01-03" required>
+        <label for="duration">#Days</label>
         <input type="number" placeholder="days" id= "duration" name ="duration" value ="" min="1" required>
+        <label for="travelers">#Travelers</label>
         <input type="number" placeholder= "guests" name="travelers" min="1" value="" id="travelers" required>
         <button type="submit" name="button" id="estimateButton">Estimate Cost</button>
+        <button type="submit" name="button" id="editBtn">Edit Trip</button>
         <button type="submit" name="button" id="bookButton">Book it!</button>
       </section>
       <section class="cost-estimate"></section>

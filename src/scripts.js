@@ -35,6 +35,7 @@ const goDashboardBtn = document.querySelector("#goToDashboardBtn");
 const navButtons = document.querySelector(".nav-buttons");
 const bookBtn = document.querySelector("#bookButton");
 const estimateBtn = document.querySelector("#estimateButton");
+const editBtn = document.querySelector("#editBtn");
 //Sections
 const loginContainer = document.querySelector(".login-container");
 const totalExpenses = document.querySelector(".total-expenses");
@@ -51,7 +52,8 @@ loginBtn.addEventListener("click", logIn);
 logoutBtn.addEventListener("click", logOut);
 goDashboardBtn.addEventListener("click", showDashboard);
 goBookTripBtn.addEventListener("click", showBookTrip);
-estimateBtn.addEventListener("click", estimateCost)
+estimateBtn.addEventListener("click", estimateCost);
+editBtn.addEventListener("click", editTrip);
 
 //Functions
 function getAllTravelData() {
@@ -157,6 +159,7 @@ function showBookTrip() {
   hide(loginContainer);
   hide(dashboard);
   hide(bookBtn);
+  hide(editBtn);
   showDestinations();
 }
 
@@ -196,9 +199,9 @@ function showDestinations() {
 
 function estimateCost() {
   const selectedDate = getDate(startDate.value);
-  const numTravelers = travelerChoice.value;
-  const selectedDuration = durationChoice.value;
-  const selectedDestination = destinationChoice.value;
+  const numTravelers = parseInt(travelerChoice.value);
+  const selectedDuration = parseInt(durationChoice.value);
+  const selectedDestination = parseInt(destinationChoice.value);
   let tripObj = {
     destinationID: selectedDestination,
     duration: selectedDuration,
@@ -207,6 +210,15 @@ function estimateCost() {
   };
   const newTrip = new Trip(tripObj);
   const cost = newTrip.getTripCost(destinations)
-  tripEstimate.innerHTML = `$${cost} (including 10% travel agent fee)`
+  tripEstimate.innerHTML = `Estimate: $${cost} (inclusive of 10% travel agent fee)`
+  hide(estimateBtn);
+  show(editBtn);
+  show(bookBtn);
 }
 
+function editTrip() {
+    hide(bookBtn);
+    show(estimateBtn);
+    hide(editBtn);
+    tripEstimate.innerHTML = ""
+}
