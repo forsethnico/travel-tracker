@@ -47,9 +47,9 @@
         <img src="./images/logo_transparent.png" alt="go nomad logo transparent" id="goNomadLogo-trans" />
       </div>
       <div class ="nav-buttons">
-        <button class="button" id="goToDashboardBtn">dashboard.</button>
-        <button class="button" id="bookTripBtn">book trip.</button>
-        <button class="button" id="addDestinationBtn">add destination.</button>
+        <button class="button hidden" id="goToDashboardBtn">dashboard.</button>
+        <button class="button" id="goBookTripBtn">book trip.</button>
+        <button class="button" id="goDestinationBtn">add destination.</button>
         <button class="button" id="logoutBtn">logout.</button>
       </div>  
     </section>  
@@ -89,12 +89,40 @@
           <input type="number" placeholder= "guests" name="travelers" min="1" value="" id="travelers" required>
           </section>
           <button type="submit" name="button" class = "button" id="estimateButton">estimate cost.</button>
-          <button type="submit" name="button" class = "button" id="editBtn">edit.</button>
-          <button type="submit" name="button" class = "button" id="bookButton">book me.</button>
+          <button type="submit" name="button" class = "button hidden" id="editBtn">edit.</button>
+          <button type="submit" name="button" class = "button hidden" id="bookButton">book me.</button>
         </section>
       <section class="cost-estimate"></section>
     </section>
     <section class ="success-message hidden"></section>
+  </section>
+  <section class = "create-destination-page">
+    <h2>create your next destination.</h2>
+    <section class="create-destination-container">
+      <section class="destination-details">
+        <section class="trip-input">
+          <label for="city" class="label">city.</label><br>
+          <input type="text" placeholder="City" id="city" name="city" required></input><br>
+          <label for="country" class="label">country.</label><br>
+          <input type="text" placeholder="Country" id="country" name="country" required></input><br>
+        </section>
+        <section class=trip-input>
+          <label for="lodging" class="label">lodging.</label><br>
+          <input type="number" placeholder="cost per day" id="lodging"  name ="lodging" value ="" min="1" required><br>
+          <label for="flight" class="label">flights.</label><br>
+          <input type="number" placeholder="cost per person" id= "flight" name ="flight" value ="" min="1" required><br>
+        </section>
+        <section class="trip-input">
+          <label for="image" class="label">photo.</label><br>
+        <input type="text" placeholder= "add URL for image" name="image" id="image" required><br>
+          <label for="alt" class="label">description.</label><br>
+        <input type="text" placeholder= "describe photo" name="alt" id="alt" required><br>
+        </section>
+        <button type="submit" name="button" class = "button" id="addDestinationBtn">add destination.</button>
+      </section>
+    <section class="cost-estimate"></section>
+  </section>
+  <section class ="dest-success-message hidden"></section>
   </section>
   </section> 
   <script src="bundle.js"></script>

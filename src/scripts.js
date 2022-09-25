@@ -29,31 +29,35 @@ const passwordInput = document.querySelector("#password");
 //Buttons
 const loginBtn = document.querySelector("#loginBtn");
 const logoutBtn = document.querySelector("#logoutBtn");
-const destinationBtn = document.querySelector("#addDestinationBtn");
-const goBookTripBtn = document.querySelector("#bookTripBtn");
+const goDestinationBtn = document.querySelector("#goDestinationBtn");
+const goBookTripBtn = document.querySelector("#goBookTripBtn");
 const goDashboardBtn = document.querySelector("#goToDashboardBtn");
 const bookBtn = document.querySelector("#bookButton");
 const estimateBtn = document.querySelector("#estimateButton");
 const editBtn = document.querySelector("#editBtn");
+const addDestinationBtn = document.querySelector("#addDestinationBtn");
 //Sections
 const loginContainer = document.querySelector(".login-container");
 const totalExpenses = document.querySelector(".total-expenses");
 const dashboard = document.querySelector(".dashboard-page");
 const navView = document.querySelector(".nav-view");
 const createTrip = document.querySelector(".create-trip-page");
+const destinationPage = document.querySelector(".create-destination-page");
 const tripEstimate = document.querySelector(".cost-estimate");
 const myTrips = document.querySelector(".my-trips-container");
 const successMessage = document.querySelector(".success-message");
-
+const destSuccessMessage = document.querySelector(".dest-success-message");
 //Event Listeners
 window.addEventListener("load", onLoad);
 loginBtn.addEventListener("click", logIn);
 logoutBtn.addEventListener("click", logOut);
 goDashboardBtn.addEventListener("click", showDashboard);
-goBookTripBtn.addEventListener("click", showBookTrip);
+goBookTripBtn.addEventListener("click", showBookTripPage);
+goDestinationBtn.addEventListener("click", showCreateDestinationPage);
 estimateBtn.addEventListener("click", estimateCost);
 editBtn.addEventListener("click", editTrip);
 bookBtn.addEventListener("click", bookNewTrip);
+addDestinationBtn.addEventListener("click", addNewDestination);
 
 //Functions
 function getAllTravelData() {
@@ -68,15 +72,19 @@ function getAllTravelData() {
       return new Destination(destination);
     });
     //Remove when login page is enabled
-    // currentTraveler = new Traveler(allTravelers[6]);
+    currentTraveler = new Traveler(allTravelers[6]);
     setCurrentDate();
   });
 }
 
 function onLoad() {
-    getAllTravelData().then(responses => {
-        showMainPage()
-    })
+  getAllTravelData().then((responses) => {
+    if (currentTraveler === null) {
+      showMainPage();
+    } else {
+      showCreateDestinationPage();
+    }
+  });
 }
 
 function setCurrentDate() {
@@ -144,29 +152,30 @@ function logOut() {
 
 function showDashboard() {
   hide(loginContainer);
-  hide(createTrip);
   hide(goDashboardBtn);
   show(goBookTripBtn);
-  show(destinationBtn);
+  show(goDestinationBtn);
   show(logoutBtn);
   show(dashboard);
   show(navView);
+  hide(destinationPage);
+  hide(createTrip);
   displayUserWelcome();
   displayTotalExpenses();
   displayUserTrips();
 }
 
-function showBookTrip() {
-  hide(goBookTripBtn);
+function showBookTripPage() {
+  show(navView);
   show(goDashboardBtn);
   show(logoutBtn);
   show(createTrip);
+  show(goDestinationBtn);
+  hide(goBookTripBtn);
   hide(loginContainer);
   hide(dashboard);
-  hide(bookBtn);
-  hide(editBtn);
-  show(navView);
   hide(successMessage);
+  hide(destinationPage);
   showDestinations();
 }
 
@@ -175,8 +184,14 @@ function displayUserWelcome() {
 }
 
 function displayTotalExpenses() {
-  const expenses = currentTraveler.getAllExpensesForYear(trips, destinations, new Date());
-  totalExpenses.innerHTML = `Total Amount Spent This Year: <br>$${expenses.toFixed(2)}`;
+  const expenses = currentTraveler.getAllExpensesForYear(
+    trips,
+    destinations,
+    new Date()
+  );
+  totalExpenses.innerHTML = `Total Amount Spent This Year: <br>$${expenses.toFixed(
+    2
+  )}`;
 }
 
 function displayUserTrips() {
@@ -245,21 +260,20 @@ function bookNewTrip() {
   const numTravelers = parseInt(travelerChoice.value);
   const selectedDuration = parseInt(durationChoice.value);
   const selectedDestination = parseInt(destinationChoice.value);
-  const newTripObj = 
-    {
-        id: sortedTripsByID[0].id + 1,
-        userID: currentTraveler.id,
-        destinationID: selectedDestination,
-        travelers: numTravelers,
-        date: selectedDate,
-        duration: selectedDuration,
-        status: "pending",
-        suggestedActivities: [],
-      }
+  const newTripObj = {
+    id: sortedTripsByID[0].id + 1,
+    userID: currentTraveler.id,
+    destinationID: selectedDestination,
+    travelers: numTravelers,
+    date: selectedDate,
+    duration: selectedDuration,
+    status: "pending",
+    suggestedActivities: [],
+  };
   fetch("http://localhost:3001/api/v1/trips", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(newTripObj)
+    body: JSON.stringify(newTripObj),
   })
     .then((response) => {
       if (!response.ok) {
@@ -270,8 +284,7 @@ function bookNewTrip() {
     })
     .then((response) => {
       getAllTravelData();
-      console.log(response.message)
-      displaySuccessMessage(response.message, response.newTrip);
+      displayTripSuccessMessage(response.message, response.newTrip);
       showNewTrip();
     })
     .catch((err) => {
@@ -280,19 +293,88 @@ function bookNewTrip() {
 }
 
 function showNewTrip() {
-    show(createTrip);
+  show(createTrip);
+  show(navView);
+  hide(dashboard);
+  show(goDashboardBtn);
+  show(goDestinationBtn);
+  show(logoutBtn);
+  hide(loginContainer);
+  show(successMessage);
+}
+
+function displayTripSuccessMessage(message, newTrip) {
+  const newTripObj = new Trip(newTrip);
+  const destinationObj = newTripObj.getDestinationInfo(destinations);
+  successMessage.innerHTML = `<section class="just-booked"><p>${message}.<br> Congrats! <br>Your trip to ${destinationObj.destination} is pending approval!</p>
+  <img class ="new-trip-photo" src= ${destinationObj.image}</section>`;
+}
+
+function addNewDestination() {
+  const sortedDestinationsByID = destinations.sort((a, b) => {
+    return b.id - a.id;
+  });
+  const newDestination = `${city.value}, ${country.value}`
+  const lodgingEstimate = parseInt(lodging.value);
+  const flightCost = parseInt(flight.value);
+  const photo = image.value;
+  const description = alt.value;
+  const newDestinationObj = {
+    id: sortedDestinationsByID[0].id + 1,
+    destination: newDestination,
+    estimatedLodgingCostPerDay: lodgingEstimate,
+    estimatedFlightCostPerPerson: flightCost,
+    image: photo,
+    alt: description,
+  };
+  fetch("http://localhost:3001/api/v1/destinations", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(newDestinationObj),
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(response.statusText);
+      } else {
+        return response.json();
+      }
+    })
+    .then((response) => {
+      getAllTravelData();
+      displayDestSuccessMessage(response.message, response.newDestination);
+      showNewDestination();
+    })
+    .catch((err) => {
+      errorMessage.innerText = err.message;
+    });
+}
+
+function showCreateDestinationPage() {
+  hide(createTrip);
+  hide(loginContainer);
+  hide(dashboard);
+  hide(goDestinationBtn);
+  show(goDashboardBtn);
+  show(logoutBtn);
+  show(navView);
+  show(goBookTripBtn);
+  show(destinationPage);
+}
+
+function displayDestSuccessMessage(message, newDestination) {
+    const newDestObj = new Destination(newDestination);
+    destSuccessMessage.innerHTML = `<section class="created-destination"><p>${message}. <br>
+    You added ${newDestObj.destination} details to the list of locales. Go book a new trip!</p><img src=${newDestObj.image}</section>`
+}
+
+function showNewDestination() {
+    hide(createTrip);
     show(navView);
     hide(dashboard);
     show(goDashboardBtn);
-    show(destinationBtn);
+    hide(goDestinationBtn);
     show(logoutBtn);
     hide(loginContainer);
-    show(successMessage);
-}
-
-function displaySuccessMessage(message, newTrip) {
-  let newTripObj = new Trip(newTrip)
-  let destinationObj = newTripObj.getDestinationInfo(destinations);
-  successMessage.innerHTML = `<section class="just-booked"><p>${message}.<br> Congrats! <br>Your trip to ${destinationObj.destination} is pending approval!</p>
-  <img class ="new-trip-photo" src= ${destinationObj.image}</section>`;
+    show(destinationPage);
+    show(destSuccessMessage);
 }

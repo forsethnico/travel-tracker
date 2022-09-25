@@ -94,7 +94,7 @@ margin: 0vh 12vw 0vh 10vw;
   border-radius: 2px;
 }
 
-.create-trip-page {
+.create-trip-page, .create-destination-page {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -139,6 +139,24 @@ margin: 0vh 12vw 0vh 10vw;
   height: 200px;
   margin-bottom: 1vh;
   border-radius: 2px;
+}
+
+.create-destination-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 35vw;
+  background-color:rgba(64, 85, 89, 0.8);
+  padding-bottom: 3vh;
+  padding-top: 1vh;
+  border-radius: 30px;
+  margin: 0vh 12vw 0vh 10vw;
+}
+
+.destination-details {
+  display: flex;
+  flex-direction: column;
 }
 
 #estimateButton, #editBtn, #bookButton {
