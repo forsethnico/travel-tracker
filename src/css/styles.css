@@ -93,10 +93,13 @@ margin: 0vh 12vw 0vh 10vw;
   margin-top: 1vh;
   border-radius: 2px;
 }
-.new-trip-photo {
-  width: 50%;
-}
 
+.create-trip-page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 .create-trip-container {
   display: flex;
   flex-direction: column;
@@ -104,7 +107,6 @@ margin: 0vh 12vw 0vh 10vw;
   align-items: center;
   width: 80vw;
   background-color:rgba(64, 85, 89, 0.8);
-  /* justify-items: space-between; */
   padding-bottom: 3vh;
   padding-top: 1vh;
   border-radius: 30px;
@@ -118,6 +120,25 @@ margin: 0vh 12vw 0vh 10vw;
 
 .trip-input {
   margin: 1vw 1vh 1vh 1vw;
+}
+
+.success-message {
+  margin: 5vh 12vw 0vh 10vw;
+  background-color: #5C551F;
+  width: 60vw;
+  color: white;
+  border-radius: 30px;
+}
+
+.just-booked {
+  align-items: center;
+}
+
+.new-trip-photo {
+  width: 50%;
+  height: 200px;
+  margin-bottom: 1vh;
+  border-radius: 2px;
 }
 
 #estimateButton, #editBtn, #bookButton {

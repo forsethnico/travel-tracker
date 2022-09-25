@@ -32,7 +32,6 @@ const logoutBtn = document.querySelector("#logoutBtn");
 const destinationBtn = document.querySelector("#addDestinationBtn");
 const goBookTripBtn = document.querySelector("#bookTripBtn");
 const goDashboardBtn = document.querySelector("#goToDashboardBtn");
-const navButtons = document.querySelector(".nav-buttons");
 const bookBtn = document.querySelector("#bookButton");
 const estimateBtn = document.querySelector("#estimateButton");
 const editBtn = document.querySelector("#editBtn");
@@ -42,7 +41,6 @@ const totalExpenses = document.querySelector(".total-expenses");
 const dashboard = document.querySelector(".dashboard-page");
 const navView = document.querySelector(".nav-view");
 const createTrip = document.querySelector(".create-trip-page");
-const tripDetails = document.querySelector(".trip-details");
 const tripEstimate = document.querySelector(".cost-estimate");
 const myTrips = document.querySelector(".my-trips-container");
 const successMessage = document.querySelector(".success-message");
@@ -135,7 +133,6 @@ function logIn(event) {
 
 function logOut() {
   hide(dashboard);
-  hide(navButtons);
   hide(createTrip);
   hide(navView);
   show(loginContainer);
@@ -149,8 +146,6 @@ function showDashboard() {
   hide(loginContainer);
   hide(createTrip);
   hide(goDashboardBtn);
-  hide(loginContainer);
-  hide(createTrip);
   show(goBookTripBtn);
   show(destinationBtn);
   show(logoutBtn);
@@ -171,6 +166,7 @@ function showBookTrip() {
   hide(bookBtn);
   hide(editBtn);
   show(navView);
+  hide(successMessage);
   showDestinations();
 }
 
@@ -179,8 +175,8 @@ function displayUserWelcome() {
 }
 
 function displayTotalExpenses() {
-  const expenses = currentTraveler.getAllExpenses(trips, destinations);
-  totalExpenses.innerHTML = `Total Amount Spent: <br>$${expenses.toFixed(2)}`;
+  const expenses = currentTraveler.getAllExpensesForYear(trips, destinations, new Date());
+  totalExpenses.innerHTML = `Total Amount Spent This Year: <br>$${expenses.toFixed(2)}`;
 }
 
 function displayUserTrips() {
@@ -237,6 +233,7 @@ function editTrip() {
   hide(bookBtn);
   show(estimateBtn);
   hide(editBtn);
+  hide(successMessage);
   tripEstimate.innerHTML = "";
 }
 
@@ -283,18 +280,19 @@ function bookNewTrip() {
 }
 
 function showNewTrip() {
-    // show(createTrip);
-    // show(navView);
-    // hide(dashboard);
-    // show(goDashboardBtn);
-    // show(logoutBtn);
-    // hide(loginContainer);
+    show(createTrip);
+    show(navView);
+    hide(dashboard);
+    show(goDashboardBtn);
+    show(destinationBtn);
+    show(logoutBtn);
+    hide(loginContainer);
     show(successMessage);
 }
-
 
 function displaySuccessMessage(message, newTrip) {
   let newTripObj = new Trip(newTrip)
   let destinationObj = newTripObj.getDestinationInfo(destinations);
-  successMessage.innerHTML = `<section class="just-booked"><h4>${message}</h4><img class ="new-trip-photo" src= ${destinationObj.image}</section>`;
+  successMessage.innerHTML = `<section class="just-booked"><p>${message}.<br> Congrats! <br>Your trip to ${destinationObj.destination} is pending approval!</p>
+  <img class ="new-trip-photo" src= ${destinationObj.image}</section>`;
 }
