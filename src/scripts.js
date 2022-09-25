@@ -71,7 +71,7 @@ function getAllTravelData() {
     currentTraveler = new Traveler(allTravelers[6]);
     setCurrentDate();
     showBookTrip();
-  });
+});
 }
 
 function setCurrentDate() {
@@ -130,6 +130,7 @@ function logOut() {
   hide(dashboard);
   hide(navButtons);
   hide(createTrip);
+  hide(navView);
   show(loginContainer);
   currentTraveler = null;
   usernameInput.value = "";
@@ -143,16 +144,17 @@ function showDashboard() {
   hide(goDashboardBtn);
   hide(loginContainer);
   hide(createTrip);
-  show(bookTripBtn);
+  show(goBookTripBtn);
   show(destinationBtn);
   show(logoutBtn);
+  show(dashboard);
   displayUserWelcome();
   displayTotalExpenses();
   displayUserTrips();
 }
 
 function showBookTrip() {
-  hide(bookTripBtn);
+  hide(goBookTripBtn);
   show(goDashboardBtn);
   show(logoutBtn);
   show(createTrip);
@@ -169,7 +171,7 @@ function displayUserWelcome() {
 
 function displayTotalExpenses() {
   const expenses = currentTraveler.getAllExpenses(trips, destinations);
-  totalExpenses.innerHTML = `Total Amount Spent: <br>$${expenses}`;
+  totalExpenses.innerHTML = `Total Amount Spent: <br>$${expenses.toFixed(2)}`;
 }
 
 function displayUserTrips() {
@@ -190,10 +192,16 @@ function displayUserTrips() {
 
 function showDestinations() {
     const destinationSelection = document.querySelector(".destination-dropdown");
-    let destinationOptions = destinations.map((destination) => {
-      return `<option value="${destination.id}">${destination.destination}</option>`;
-    });
-    destinationSelection.innerHTML = `${destinationOptions}`;
+    let destinationOptions = destinations.sort((a, b) => {
+        let firstCity = a.destination.split(",")[0]
+        let secondCity = b.destination.split(",")[0]
+        return firstCity.localeCompare(secondCity)
+    })   
+    let options = destinationOptions.map(destination => {
+        return `<option value="${destination.id}">${destination.destination}</option>`;
+
+    })
+ destinationSelection.innerHTML = `${options}`;
   }
   
 
@@ -210,10 +218,10 @@ function estimateCost() {
   };
   const newTrip = new Trip(tripObj);
   const cost = newTrip.getTripCost(destinations)
-  tripEstimate.innerHTML = `Estimate: $${cost} (inclusive of 10% travel agent fee)`
-  hide(estimateBtn);
-  show(editBtn);
-  show(bookBtn);
+    tripEstimate.innerHTML = `Estimate: $${cost.toFixed(2)} (inclusive of 10% travel agent fee)`
+    hide(estimateBtn);
+    show(editBtn);
+    show(bookBtn);
 }
 
 function editTrip() {
