@@ -28,26 +28,38 @@ const usernameInput = document.querySelector("#username");
 const passwordInput = document.querySelector("#password");
 //Buttons
 const loginBtn = document.querySelector("#loginBtn");
-const logoutBtn = document.querySelector("#logoutBtn")
+const logoutBtn = document.querySelector("#logoutBtn");
+const destinationBtn = document.querySelector("#addDestinationBtn");
+const goBookTripBtn = document.querySelector("#bookTripBtn");
+const goDashboardBtn = document.querySelector("#goToDashboardBtn");
 const navButtons = document.querySelector(".nav-buttons");
 const bookBtn = document.querySelector("#bookButton");
 const estimateBtn = document.querySelector("#estimateButton");
+const editBtn = document.querySelector("#editBtn");
 //Sections
 const loginContainer = document.querySelector(".login-container");
 const totalExpenses = document.querySelector(".total-expenses");
+const dashboard = document.querySelector(".dashboard-page");
+const navView = document.querySelector(".nav-view");
 const createTrip = document.querySelector(".create-trip-page");
 const tripDetails = document.querySelector(".trip-details");
 const tripEstimate = document.querySelector(".cost-estimate");
 const myTrips = document.querySelector(".my-trips-container");
+const successMessage = document.querySelector(".success-message");
 
 //Event Listeners
-window.addEventListener("load", getAllTravelData);
+window.addEventListener("load", onLoad);
 loginBtn.addEventListener("click", logIn);
 logoutBtn.addEventListener("click", logOut);
+goDashboardBtn.addEventListener("click", showDashboard);
+goBookTripBtn.addEventListener("click", showBookTrip);
+estimateBtn.addEventListener("click", estimateCost);
+editBtn.addEventListener("click", editTrip);
+bookBtn.addEventListener("click", bookNewTrip);
 
 //Functions
 function getAllTravelData() {
-  getTravelData().then((responses) => {
+  return getTravelData().then((responses) => {
     allTravelers = responses[0].travelers;
     tripData = responses[1].trips;
     destinationData = responses[2].destinations;
@@ -58,10 +70,15 @@ function getAllTravelData() {
       return new Destination(destination);
     });
     //Remove when login page is enabled
-    currentTraveler = new Traveler(allTravelers[6]);
+    // currentTraveler = new Traveler(allTravelers[6]);
     setCurrentDate();
-    showDashboard();
   });
+}
+
+function onLoad() {
+    getAllTravelData().then(responses => {
+        showMainPage()
+    })
 }
 
 function setCurrentDate() {
@@ -82,6 +99,13 @@ function show(element) {
   element.classList.remove("hidden");
 }
 
+function showMainPage() {
+  show(loginContainer);
+  hide(dashboard);
+  hide(navView);
+  hide(createTrip);
+}
+
 function logIn(event) {
   event.preventDefault();
   const username = usernameInput.value;
@@ -92,7 +116,7 @@ function logIn(event) {
   if (password !== "travel") {
     errorMessage.innerText = `Invalid user password.`;
   }
-  let id = username.slice(8, usernameInput.value.length);
+  const id = username.slice(8, usernameInput.value.length);
   if (id.startsWith(0)) {
     errorMessage.innerText = `Invalid user name.`;
   } else if (id) {
@@ -110,21 +134,44 @@ function logIn(event) {
 }
 
 function logOut() {
-    currentTraveler = null;
-    hide(dashboard);
-    show(loginContainer);
-    hide(navButtons);
-    usernameInput.value = "";
-    passwordInput.value = "";
-    errorMessage.innerText = "";
+  hide(dashboard);
+  hide(navButtons);
+  hide(createTrip);
+  hide(navView);
+  show(loginContainer);
+  currentTraveler = null;
+  usernameInput.value = "";
+  passwordInput.value = "";
+  errorMessage.innerText = "";
 }
 
 function showDashboard() {
+  hide(loginContainer);
+  hide(createTrip);
+  hide(goDashboardBtn);
+  hide(loginContainer);
+  hide(createTrip);
+  show(goBookTripBtn);
+  show(destinationBtn);
+  show(logoutBtn);
+  show(dashboard);
+  show(navView);
   displayUserWelcome();
   displayTotalExpenses();
   displayUserTrips();
-  show(navButtons);
+}
+
+function showBookTrip() {
+  hide(goBookTripBtn);
+  show(goDashboardBtn);
+  show(logoutBtn);
+  show(createTrip);
   hide(loginContainer);
+  hide(dashboard);
+  hide(bookBtn);
+  hide(editBtn);
+  show(navView);
+  showDestinations();
 }
 
 function displayUserWelcome() {
@@ -132,12 +179,12 @@ function displayUserWelcome() {
 }
 
 function displayTotalExpenses() {
-  let expenses = currentTraveler.getAllExpenses(trips, destinations);
-  totalExpenses.innerHTML = `Total Amount Spent: <br>$${expenses}`;
+  const expenses = currentTraveler.getAllExpenses(trips, destinations);
+  totalExpenses.innerHTML = `Total Amount Spent: <br>$${expenses.toFixed(2)}`;
 }
 
 function displayUserTrips() {
-  let userTrips = currentTraveler.getAllTrips(trips);
+  const userTrips = currentTraveler.getAllTrips(trips);
   myTrips.innerHTML = "";
   if (userTrips.length > 0) {
     userTrips.forEach((trip) => {
@@ -150,4 +197,104 @@ function displayUserTrips() {
             </section>`;
     });
   }
+}
+
+function showDestinations() {
+  const destinationSelection = document.querySelector(".destination-dropdown");
+  let destinationOptions = destinations.sort((a, b) => {
+    let firstCity = a.destination.split(",")[0];
+    let secondCity = b.destination.split(",")[0];
+    return firstCity.localeCompare(secondCity);
+  });
+  let options = destinationOptions.map((destination) => {
+    return `<option value="${destination.id}">${destination.destination}</option>`;
+  });
+  destinationSelection.innerHTML = `${options}`;
+}
+
+function estimateCost() {
+  const selectedDate = getDate(startDate.value);
+  const numTravelers = parseInt(travelerChoice.value);
+  const selectedDuration = parseInt(durationChoice.value);
+  const selectedDestination = parseInt(destinationChoice.value);
+  let tripObj = {
+    destinationID: selectedDestination,
+    duration: selectedDuration,
+    date: selectedDate,
+    travelers: numTravelers,
+  };
+  const newTrip = new Trip(tripObj);
+  const cost = newTrip.getTripCost(destinations);
+  tripEstimate.innerHTML = `Estimate: $${cost.toFixed(
+    2
+  )} (inclusive of 10% travel agent fee)`;
+  hide(estimateBtn);
+  show(editBtn);
+  show(bookBtn);
+}
+
+function editTrip() {
+  hide(bookBtn);
+  show(estimateBtn);
+  hide(editBtn);
+  tripEstimate.innerHTML = "";
+}
+
+function bookNewTrip() {
+  let sortedTripsByID = trips.sort((a, b) => {
+    return b.id - a.id;
+  });
+  const selectedDate = getDate(startDate.value);
+  const numTravelers = parseInt(travelerChoice.value);
+  const selectedDuration = parseInt(durationChoice.value);
+  const selectedDestination = parseInt(destinationChoice.value);
+  const newTripObj = 
+    {
+        id: sortedTripsByID[0].id + 1,
+        userID: currentTraveler.id,
+        destinationID: selectedDestination,
+        travelers: numTravelers,
+        date: selectedDate,
+        duration: selectedDuration,
+        status: "pending",
+        suggestedActivities: [],
+      }
+  fetch("http://localhost:3001/api/v1/trips", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(newTripObj)
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(response.statusText);
+      } else {
+        return response.json();
+      }
+    })
+    .then((response) => {
+      getAllTravelData();
+      console.log(response.message)
+      displaySuccessMessage(response.message, response.newTrip);
+      showNewTrip();
+    })
+    .catch((err) => {
+      errorMessage.innerText = err.message;
+    });
+}
+
+function showNewTrip() {
+    // show(createTrip);
+    // show(navView);
+    // hide(dashboard);
+    // show(goDashboardBtn);
+    // show(logoutBtn);
+    // hide(loginContainer);
+    show(successMessage);
+}
+
+
+function displaySuccessMessage(message, newTrip) {
+  let newTripObj = new Trip(newTrip)
+  let destinationObj = newTripObj.getDestinationInfo(destinations);
+  successMessage.innerHTML = `<section class="just-booked"><h4>${message}</h4><img class ="new-trip-photo" src= ${destinationObj.image}</section>`;
 }

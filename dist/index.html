@@ -9,7 +9,7 @@
     <title>Go Nomad.</title>
   </head>
   <body>
-    <section class="login-container hidden">
+    <section class="login-container">
       <img src="./images/logo_transparent.png" alt="go nomad logo" id="goNomadLogo-trans">
       <h1>Welcome! <br>Login to start your travels!</h1>
       <form class="login-form">
@@ -48,6 +48,7 @@
       </div>
       <div class ="nav-buttons">
         <button class="button" id="bookTripBtn">book trip.</button>
+        <button class="button" id="goToDashboardBtn">dashboard.</button>
         <button class="button" id="addDestinationBtn">add destination.</button>
         <button class="button" id="logoutBtn">logout.</button>
       </div>  
@@ -67,19 +68,34 @@
       <section class ="my-trips-container">
       </section>
     </section>
-    <section class = "create-trip-page hidden">
+    <section class = "create-trip-page">
       <h2>book your next getaway.</h2>
-      <section class="trip-details">
-        <input placeholder="destination" aria-label="destination-select" list="locations" name="myDestinations" class="destination-dropdown" id="destination" required>
-        <datalist id="locations"></datalist>
-        <input type="date" placeholder="start date" id="tripStart" aria-label="calendar-select" name ="arrive" value ="2022-09-27" min="2020-01-03" required>
-        <input type="number" placeholder="days" id= "duration" name ="duration" value ="" min="1" required>
-        <input type="number" placeholder= "guests" name="travelers" min="1" value="" id="travelers" required>
-        <button type="submit" name="button" id="estimateButton">Estimate Cost</button>
-        <button type="submit" name="button" id="bookButton">Book it!</button>
-      </section>
+      <section class="create-trip-container">
+        <section class="trip-details">
+          <section class="trip-input">
+            <label for="destination" class="label">destination.</label><br>
+            <select placeholder="destination" id="destination" aria-label="destination-select" class = "destination-dropdown" name="destination" required></select>
+          </section>
+          <section class=trip-input>
+            <label for="arrive" class="label">start date.</label><br>
+            <input type="date" placeholder="start date" id="tripStart" aria-label="calendar-select" name ="arrive" value ="2022-09-27" min="2020-01-03" required>
+          </section>
+          <section class="trip-input">
+            <label for="duration" class="label">days.</label><br>
+            <input type="number" placeholder="days" id= "duration" name ="duration" value ="" min="1" required>
+          </section>
+          <section class="trip-input">
+            <label for="travelers" class="label">travelers.</label><br>
+          <input type="number" placeholder= "guests" name="travelers" min="1" value="" id="travelers" required>
+          </section>
+          <button type="submit" name="button" class = "button" id="estimateButton">estimate cost.</button>
+          <button type="submit" name="button" class = "button" id="editBtn">edit.</button>
+          <button type="submit" name="button" class = "button" id="bookButton">book me.</button>
+        </section>
       <section class="cost-estimate"></section>
     </section>
+    <section class ="success-message hidden"></section>
+  </section>
   </section> 
   <script src="bundle.js"></script>
   </body>

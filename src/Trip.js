@@ -19,8 +19,8 @@ class Trip {
     let totalFlightCost =
       foundDestination.estimatedFlightCostPerPerson * this.travelers;
     let expenses = totalFlightCost + totalLodgingCost;
-    let tripCost = (expenses + expenses * 0.1).toFixed(2)
-    return parseFloat(tripCost);
+    let tripCost = (expenses + expenses * 0.1)
+    return tripCost;
   }
 
   getDestinationInfo(destinations) {
