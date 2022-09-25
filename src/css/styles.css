@@ -93,6 +93,9 @@ margin: 0vh 12vw 0vh 10vw;
   margin-top: 1vh;
   border-radius: 2px;
 }
+.new-trip-photo {
+  width: 50%;
+}
 
 .create-trip-container {
   display: flex;
