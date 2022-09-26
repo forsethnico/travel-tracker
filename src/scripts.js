@@ -47,6 +47,7 @@ const tripEstimate = document.querySelector(".cost-estimate");
 const myTrips = document.querySelector(".my-trips-container");
 const successMessage = document.querySelector(".success-message");
 const destSuccessMessage = document.querySelector(".dest-success-message");
+const clearDestination = document.querySelector("#clearDestinationBtn");
 //Event Listeners
 window.addEventListener("load", onLoad);
 loginBtn.addEventListener("click", logIn);
@@ -58,6 +59,7 @@ estimateBtn.addEventListener("click", estimateCost);
 editBtn.addEventListener("click", editTrip);
 bookBtn.addEventListener("click", bookNewTrip);
 addDestinationBtn.addEventListener("click", addNewDestination);
+clearDestination.addEventListener("click", clearDestinationForm);
 
 //Functions
 function getAllTravelData() {
@@ -363,8 +365,8 @@ function showCreateDestinationPage() {
 
 function displayDestSuccessMessage(message, newDestination) {
     const newDestObj = new Destination(newDestination);
-    destSuccessMessage.innerHTML = `<section class="created-destination"><p>${message}. <br>
-    You added ${newDestObj.destination} details to the list of locales. Go book a new trip!</p><img src=${newDestObj.image}</section>`
+    destSuccessMessage.innerHTML = `<section class="just-booked"><p>${message}. <br>
+    You added info for ${newDestObj.destination} to the list of locales. Go book a new trip!</p><img class = "new-trip-photo" src=${newDestObj.image}</section>`
 }
 
 function showNewDestination() {
@@ -377,4 +379,9 @@ function showNewDestination() {
     hide(loginContainer);
     show(destinationPage);
     show(destSuccessMessage);
+}
+
+function clearDestinationForm() {
+    hide(destSuccessMessage);
+    clearDestination.reset();
 }

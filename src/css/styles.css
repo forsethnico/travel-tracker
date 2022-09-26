@@ -122,7 +122,7 @@ margin: 0vh 12vw 0vh 10vw;
   margin: 1vw 1vh 1vh 1vw;
 }
 
-.success-message {
+.success-message, .dest-success-message {
   margin: 5vh 12vw 0vh 10vw;
   background-color: #5C551F;
   width: 60vw;

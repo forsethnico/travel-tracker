@@ -99,7 +99,7 @@
   <section class = "create-destination-page">
     <h2>create your next destination.</h2>
     <section class="create-destination-container">
-      <section class="destination-details">
+      <form class="destination-details" id= "destinationForm">
         <section class="trip-input">
           <label for="city" class="label">city.</label><br>
           <input type="text" placeholder="City" id="city" name="city" required></input><br>
@@ -119,7 +119,8 @@
         <input type="text" placeholder= "describe photo" name="alt" id="alt" required><br>
         </section>
         <button type="submit" name="button" class = "button" id="addDestinationBtn">add destination.</button>
-      </section>
+        <button type="submit" name="button" value = "reset form" class = "button" id="clearDestinationBtn">start over.</button>
+      </form>
     <section class="cost-estimate"></section>
   </section>
   <section class ="dest-success-message hidden"></section>
