@@ -76,16 +76,13 @@ function onLoad() {
   getAllTravelData().then((responses) => {
     if (currentTraveler === undefined) {
       showMainPage();
-    } else {
-      showDashboard();
-    }
+    } 
   });
 }
 
 function setCurrentDate() {
   let currentDate = new Date().toJSON().slice(0, 10);
   startDate.value = currentDate;
-  startDate.min = currentDate;
 }
 
 function getDate(date) {
@@ -180,8 +177,8 @@ function showDashboard() {
   hide(destinationPage);
   hide(createTrip);
   displayUserWelcome();
-  displayTotalExpenses();
   displayUserTrips();
+  displayTotalExpenses();
 }
 
 function showBookTripPage() {
@@ -203,6 +200,7 @@ function displayUserWelcome() {
 }
 
 function displayTotalExpenses() {
+//   const userTrips = currentTraveler.getAllTrips(trips)  
   const expenses = currentTraveler.getAllExpensesForYear(
     trips,
     destinations,

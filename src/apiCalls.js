@@ -19,7 +19,7 @@ const fetchTravelData = (detail) => {
         return response.json()
         }
     })
-    .catch((error) => errorMessage.innerHTML = `API error: ${error.message}`);
+    .catch((error) => console.log(`API error: ${error.message}`))
 };
 
 
