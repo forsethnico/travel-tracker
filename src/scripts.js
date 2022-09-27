@@ -26,6 +26,7 @@ const durationChoice = document.querySelector("#duration");
 const startDate = document.querySelector("#tripStart");
 const usernameInput = document.querySelector("#username");
 const passwordInput = document.querySelector("#password");
+
 //Buttons
 const loginBtn = document.querySelector("#loginBtn");
 const logoutBtn = document.querySelector("#logoutBtn");
@@ -37,6 +38,7 @@ const estimateBtn = document.querySelector("#estimateButton");
 const editBtn = document.querySelector("#editBtn");
 const addDestinationBtn = document.querySelector("#addDestinationBtn");
 const clearDestinationBtn = document.querySelector("#clearDestinationBtn");
+
 //Sections
 const loginContainer = document.querySelector(".login-container");
 const totalExpenses = document.querySelector(".total-expenses");
