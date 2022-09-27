@@ -18,6 +18,10 @@ body {
   margin: 3vh 3vw 3vh 3vw;
 }
 
+.error-message {
+  color: black;
+}
+
 h1 {
   font-size: 4vh;
   margin: 3vh 3vw 3vh 3vw;
@@ -27,7 +31,7 @@ h1 {
 h4 {
   margin: 1vh 1vw 1vh 1vw;
   text-align: center;
-  color:#35474B;
+  color:black;
 }
 
 #goNomadLogo-trans {
@@ -42,7 +46,7 @@ flex-direction: column;
 justify-items: center;
 background-color: rgba(64, 85, 89, 0.8);
 width: 40vw;
-height: 40vh;
+height: 55vh;
 border-radius: 30px;
 padding-bottom: 7vh;
 padding-top: 3vh;
@@ -55,12 +59,12 @@ margin: 0vh 1vw 0vh 1vw;
 display: inline-block;
 cursor: pointer;
 background: #7B857B;
-color: white;
+color: #000000;
 outline: 0;
-border: #262D25 solid 2px;
+border: #FFFFFF solid 2px;
 }
 
-.button:hover {
+.button:hover, .button:focus {
   background: #5C551F;
   color: white;
 }
@@ -85,6 +89,7 @@ margin: 0vh 12vw 0vh 10vw;
 
 .user-trip {
   background-color: #7B857B;
+  color: black;
 }
 
 .trip-photo {

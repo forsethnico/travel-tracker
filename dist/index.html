@@ -13,7 +13,7 @@
     <section class="login-container">
       <img src="./images/logo_transparent.png" alt="go nomad logo" id="goNomadLogo-trans">
       <h1>Welcome! <br>Login to start your travels!</h1>
-      <form class="login-form">
+      <section class="login-form">
         <input
           type="text"
           id="username"
@@ -36,38 +36,27 @@
         />
         <button
           class="button"
-          id="loginBtn"
-          type="submit"
-          value="Sign in"
-        >
+          id="loginBtn">
           enter.
         </button>
-        <section class="error-message"></section>
-      </form>
+        <p class="error-message"></p>
+      </section>
     </section>
     <section class="nav-view">
       <div>
         <img src="./images/logo_transparent.png" alt="go nomad logo transparent" id="goNomadLogo-trans" />
       </div>
-      <div class ="nav-buttons">
-        <button class="button hidden" id="goToDashboardBtn">dashboard.</button>
-        <button class="button" id="goBookTripBtn">book trip.</button>
-        <button class="button" id="goDestinationBtn">add destination.</button>
-        <button class="button" id="logoutBtn">logout.</button>
-      </div>  
+      <section class="nav-buttons">
+        <button class="button" id="goToDashboardBtn" tabindex ="0">dashboard.</button>
+        <button class="button" id="goBookTripBtn" tabindex="0">book trip.</button>
+        <button class="button" id="goDestinationBtn" tabindex="0">add destination.</button>
+        <button class="button" id="logoutBtn" tabindex="0">logout.</button>
+      </section>
     </section>  
     <section class="dashboard-page">
       <h2 class="greeting"></h2>
       <section class = "total-expenses">
       </section>
-      <!-- <section class="trip-type">
-        <form>
-          <input type = "checkbox" id ="allTrips" value="all">
-          <label for="allTrips">All Trips</label>
-          <input type = "checkbox" id="pendingTrips" value="pending">
-          <label for="pendingTrips">Pending</label>
-        </form>
-      </section> -->
       <section class ="my-trips-container">
       </section>
     </section>
@@ -91,9 +80,9 @@
             <label for="travelers" class="label">travelers.</label><br>
           <input type="number" placeholder= "guests" name="travelers" min="1" value="" id="travelers" required>
           </section>
-          <button type="submit" name="button" class = "button" id="estimateButton">estimate cost.</button>
-          <button type="submit" name="button" class = "button hidden" id="editBtn">edit trip.</button>
-          <button type="submit" name="button" class = "button hidden" id="bookButton">book me.</button>
+          <button  name="button" class = "button" id="estimateButton" tabindex ="0">estimate cost.</button>
+          <button  name="button" class = "button hidden" id="editBtn" tabindex ="0">edit trip.</button>
+          <button  name="button" class = "button hidden" id="bookButton" tabindex ="0">book me.</button>
         </section>
       <section class="cost-estimate"></section>
     </section>
@@ -121,13 +110,12 @@
           <label for="alt" class="label">description.</label><br>
         <input type="text" placeholder= "describe photo" name="alt" value="" id="alt" required><br>
         </section>
-        <button name="button" class = "button" id="addDestinationBtn" >add destination.</button>
-        <button type="reset" class = "button" id="clearDestinationBtn" >start over.</button>
+        <button name="button" class = "button" id="addDestinationBtn" tabindex ="0">add destination.</button>
+        <button type="reset" class = "button" id="clearDestinationBtn" tabindex ="0">start over.</button>
       </form>
   </section>
   <section class ="dest-success-message hidden"></section>
   </section>
-  <!-- </section>  -->
   <script src="bundle.js"></script>
   </body>
 </html>

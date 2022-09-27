@@ -18,7 +18,6 @@ let tripData,
   currentTraveler;
 
 //Query Selectors
-const errorMessage = document.querySelector(".error-message");
 const greeting = document.querySelector(".greeting");
 const destinationChoice = document.querySelector("#destination");
 const travelerChoice = document.querySelector("#travelers");
@@ -26,6 +25,8 @@ const durationChoice = document.querySelector("#duration");
 const startDate = document.querySelector("#tripStart");
 const usernameInput = document.querySelector("#username");
 const passwordInput = document.querySelector("#password");
+const errorMessage = document.querySelector(".error-message");
+
 
 //Buttons
 const loginBtn = document.querySelector("#loginBtn");
@@ -52,7 +53,7 @@ const successMessage = document.querySelector(".success-message");
 const destSuccessMessage = document.querySelector(".dest-success-message");
 
 //Event Listeners
-window.addEventListener("load", onLoad);
+window.addEventListener("load", getAllTravelData);
 loginBtn.addEventListener("click", logIn);
 logoutBtn.addEventListener("click", logOut);
 goDashboardBtn.addEventListener("click", showDashboard);
@@ -77,20 +78,21 @@ function getAllTravelData() {
       return new Destination(destination);
     });
     //Remove when login page is enabled
-    currentTraveler = new Traveler(allTravelers[8]);
+    //currentTraveler = new Traveler(allTravelers[8]);
+    showMainPage();
     setCurrentDate();
   });
 }
 
-function onLoad() {
-  getAllTravelData().then((responses) => {
-    if (currentTraveler === null) {
-      showMainPage();
-    } else {
-      showCreateDestinationPage();
-    }
-  });
-}
+// function onLoad() {
+//   getAllTravelData().then((responses) => {
+//     if (currentTraveler === undefined) {
+//       showMainPage();
+//     } else {
+//       showDashboard();
+//     }
+//   });
+// }
 
 function setCurrentDate() {
   let currentDate = new Date().toJSON().slice(0, 10);
@@ -119,19 +121,41 @@ function showMainPage() {
 }
 
 function logIn(event) {
-  event.preventDefault();
-  const username = usernameInput.value;
-  const password = passwordInput.value;
-  if (username === "" || password === "") {
-    errorMessage.innerText = `Please complete the form.`;
+    event.preventDefault();
+    const username = usernameInput.value
+    const password = passwordInput.value
+    if (!checkEmptyLogin(username, password)) {
+      try {
+        setUser(username, password);
+      } catch (error) {
+        errorMessage.innerText = error.message;
+      }
+    }
   }
-  if (password !== "travel") {
-    errorMessage.innerText = `Invalid user password.`;
-  }
-  const id = username.slice(8, usernameInput.value.length);
-  if (id.startsWith(0)) {
-    errorMessage.innerText = `Invalid user name.`;
-  } else if (id) {
+  const checkEmptyLogin = (username, password) => {
+    let emptyFields = false;
+    if(username === "") {
+        emptyFields = true;
+    } 
+    if(password === "") {
+        emptyFields = true;
+    }
+    return emptyFields;
+}
+
+function setUser(username, password) {
+    usernameInput.value = ""
+    passwordInput.value = ""
+    if(password !== "travel") {
+        throw new Error("Invalid password.")
+    }
+    if(!username.startsWith('traveler')) {
+        throw new Error("Invalid user name.")
+    }
+    let id = username.slice(8);
+    if (id.startsWith(0)) {
+    throw new Error("Invalid user name.")
+    } else if (id) {
     fetchTraveler(id)
       .then((response) => {
         currentTraveler = new Traveler(response);
@@ -141,9 +165,9 @@ function logIn(event) {
         errorMessage.innerText = error.message;
       });
   } else {
-    errorMessage.innerText = "";
+    throw new Error("Invalid user credentials.")
   }
-}
+} 
 
 function logOut() {
   hide(dashboard);
@@ -211,7 +235,7 @@ function displayUserTrips() {
             <h3>${destinationObj.destination}</h3>
             <h4>date: ${trip.date}</h4>
             <h4>status: ${trip.status}</h4>
-            <img class = "trip-photo" src=${destinationObj.image}/>
+            <img class = "trip-photo" src=${destinationObj.image} alt=${destinationObj.alt}/>
             </section>`;
     });
   }
@@ -231,6 +255,10 @@ function showDestinations() {
 }
 
 function estimateCost() {
+  if (!checkTripButtonState()) {
+    tripEstimate.innerHTML = `Please enter all required fields.`;
+    return;
+  }
   const selectedDate = getDate(startDate.value);
   const numTravelers = parseInt(travelerChoice.value);
   const selectedDuration = parseInt(durationChoice.value);
@@ -259,7 +287,12 @@ function editTrip() {
   tripEstimate.innerHTML = "";
 }
 
-function bookNewTrip() {
+function bookNewTrip(event) {
+  event.preventDefault();
+  if (!checkTripButtonState()) {
+    tripEstimate.innerHTML = `Please enter all required fields.`;
+    return;
+  }
   let sortedTripsByID = trips.sort((a, b) => {
     return b.id - a.id;
   });
@@ -314,10 +347,14 @@ function displayTripSuccessMessage(message, newTrip) {
   const newTripObj = new Trip(newTrip);
   const destinationObj = newTripObj.getDestinationInfo(destinations);
   successMessage.innerHTML = `<section class="just-booked"><p>${message}.<br> Congrats! <br>Your trip to ${destinationObj.destination} is pending approval!</p>
-  <img class ="new-trip-photo" src= ${destinationObj.image}</section>`;
+  <img class ="new-trip-photo" src= ${destinationObj.image} alt=${destinationObj.alt}</section>`;
 }
 
-function addNewDestination() {
+function addNewDestination(event) {
+  event.preventDefault();
+  if (!checkDestinationButtonState()) {
+    return;
+  }
   const sortedDestinationsByID = destinations.sort((a, b) => {
     return b.id - a.id;
   });
@@ -371,7 +408,7 @@ function showCreateDestinationPage() {
 function displayDestSuccessMessage(message, newDestination) {
   const newDestObj = new Destination(newDestination);
   destSuccessMessage.innerHTML = `<section class="just-booked"><p>${message}. <br>
-    You added info for ${newDestObj.destination} to the list of locales. Go book a new trip!</p><img class = "new-trip-photo" src=${newDestObj.image}</section>`;
+    You added info for ${newDestObj.destination} to the list of locales. Go book a new trip!</p><img class = "new-trip-photo" src=${newDestObj.image} alt=${newDestObj.alt}</section>`;
 }
 
 function showNewDestination() {
@@ -391,3 +428,35 @@ function resetForm() {
   const destinationForm = document.getElementById("destinationForm");
   destinationForm.reset();
 }
+
+const checkDestinationButtonState = () => {
+  if (
+    city.value === "" ||
+    country.value === "" ||
+    lodging.value === "" ||
+    flight.value === "" ||
+    image.value === "" ||
+    alt.value === ""
+  ) {
+    return false;
+  } else {
+    return true;
+  }
+};
+
+const checkTripButtonState = () => {
+  if (
+    tripStart.value === "" ||
+    destination.value === "" ||
+    duration.value === "" ||
+    travelers.value === ""
+  ) {
+    return false;
+  } else {
+    return true;
+  }
+};
+
+
+
+    
