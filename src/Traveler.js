@@ -25,14 +25,11 @@ class Traveler {
     let endDateObj = new Date(currentDateObj.getTime())
     let startDateObj = new Date(currentDateObj.getTime())
     startDateObj.setDate(endDateObj.getDate() - 365);
-    console.log(startDateObj)
-    console.log(endDateObj)
     let userTrips = this.getAllTrips(trips);
     let yearlyTrips = userTrips.filter(trip => {
       const entryDate = new Date(trip.date)
       return entryDate <= endDateObj && entryDate > startDateObj
     });
-    console.log(yearlyTrips)
     let totalExpenses = yearlyTrips.reduce((sum, trip) => {
       let tripCost = trip.getTripCost(destinations);
       sum += tripCost;

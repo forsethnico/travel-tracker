@@ -163,6 +163,10 @@ margin: 0vh 12vw 0vh 10vw;
 margin-top: 21px;
 }
 
+#addDestinationBtn, #clearDestinationBtn {
+  margin-top: 21px;
+}
+
 .hidden {
   display: none;
 }

@@ -36,6 +36,7 @@ const bookBtn = document.querySelector("#bookButton");
 const estimateBtn = document.querySelector("#estimateButton");
 const editBtn = document.querySelector("#editBtn");
 const addDestinationBtn = document.querySelector("#addDestinationBtn");
+const clearDestinationBtn = document.querySelector("#clearDestinationBtn");
 //Sections
 const loginContainer = document.querySelector(".login-container");
 const totalExpenses = document.querySelector(".total-expenses");
@@ -47,7 +48,7 @@ const tripEstimate = document.querySelector(".cost-estimate");
 const myTrips = document.querySelector(".my-trips-container");
 const successMessage = document.querySelector(".success-message");
 const destSuccessMessage = document.querySelector(".dest-success-message");
-const clearDestination = document.querySelector("#clearDestinationBtn");
+
 //Event Listeners
 window.addEventListener("load", onLoad);
 loginBtn.addEventListener("click", logIn);
@@ -59,7 +60,7 @@ estimateBtn.addEventListener("click", estimateCost);
 editBtn.addEventListener("click", editTrip);
 bookBtn.addEventListener("click", bookNewTrip);
 addDestinationBtn.addEventListener("click", addNewDestination);
-clearDestination.addEventListener("click", clearDestinationForm);
+clearDestinationBtn.addEventListener("click", resetForm);
 
 //Functions
 function getAllTravelData() {
@@ -74,7 +75,7 @@ function getAllTravelData() {
       return new Destination(destination);
     });
     //Remove when login page is enabled
-    currentTraveler = new Traveler(allTravelers[6]);
+    currentTraveler = new Traveler(allTravelers[8]);
     setCurrentDate();
   });
 }
@@ -112,6 +113,7 @@ function showMainPage() {
   hide(dashboard);
   hide(navView);
   hide(createTrip);
+  hide(destinationPage);
 }
 
 function logIn(event) {
@@ -144,6 +146,7 @@ function logIn(event) {
 function logOut() {
   hide(dashboard);
   hide(createTrip);
+  hide(destinationPage);
   hide(navView);
   show(loginContainer);
   currentTraveler = null;
@@ -316,7 +319,7 @@ function addNewDestination() {
   const sortedDestinationsByID = destinations.sort((a, b) => {
     return b.id - a.id;
   });
-  const newDestination = `${city.value}, ${country.value}`
+  const newDestination = `${city.value}, ${country.value}`;
   const lodgingEstimate = parseInt(lodging.value);
   const flightCost = parseInt(flight.value);
   const photo = image.value;
@@ -364,24 +367,25 @@ function showCreateDestinationPage() {
 }
 
 function displayDestSuccessMessage(message, newDestination) {
-    const newDestObj = new Destination(newDestination);
-    destSuccessMessage.innerHTML = `<section class="just-booked"><p>${message}. <br>
-    You added info for ${newDestObj.destination} to the list of locales. Go book a new trip!</p><img class = "new-trip-photo" src=${newDestObj.image}</section>`
+  const newDestObj = new Destination(newDestination);
+  destSuccessMessage.innerHTML = `<section class="just-booked"><p>${message}. <br>
+    You added info for ${newDestObj.destination} to the list of locales. Go book a new trip!</p><img class = "new-trip-photo" src=${newDestObj.image}</section>`;
 }
 
 function showNewDestination() {
-    hide(createTrip);
-    show(navView);
-    hide(dashboard);
-    show(goDashboardBtn);
-    hide(goDestinationBtn);
-    show(logoutBtn);
-    hide(loginContainer);
-    show(destinationPage);
-    show(destSuccessMessage);
+  hide(createTrip);
+  show(navView);
+  hide(dashboard);
+  show(goDashboardBtn);
+  hide(goDestinationBtn);
+  show(logoutBtn);
+  hide(loginContainer);
+  show(destinationPage);
+  show(destSuccessMessage);
 }
 
-function clearDestinationForm() {
-    hide(destSuccessMessage);
-    clearDestination.reset();
+function resetForm() {
+  hide(destSuccessMessage);
+  const destinationForm = document.getElementById("destinationForm");
+  destinationForm.reset();
 }
