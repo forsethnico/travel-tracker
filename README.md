@@ -1,17 +1,7 @@
 # Travel Tracker - Go Nomad.
 
-## Table of Contents
-- [Introduction](#introduction)
-- [Links](#links)
-- [Learning Goals](#learning-goals)
-- [Features](#features)
-- [Setup](#setup)
-- [Future Additions](#future-additions)
-- [Technologies](#Technologies)
-- [Contributors](#contributors)
-
 ## Introduction
-Travel Tracker is an application that manages and tracks trips for users. 
+Travel Tracker is an application that manages and tracks trips for users. Users can add new trips or destinations by entering details into a form. 
 
 ## Links
 - [Project spec](https://frontend.turing.edu/projects/travel-tracker.html)
@@ -25,13 +15,17 @@ Travel Tracker is an application that manages and tracks trips for users.
 - Utilize proper error handling for our users to ensure they get data and submit POST requests. 
 
 ## Features
-The traveler(user) is directed to login using a username (such as "traveler50") and password("travel") to enter the website. Then the user is taken to their dashboard which shows all trips that they have taken (either pending or approved). The dollar amount the user has spent on travel in the last year is also listed. Then the user can choose to book a new trip or add a new destination to the list of potential places to travel. 
+The traveler(user) is directed to login using a username (such as "traveler50") and password("travel") to enter the website. Then the user is taken to their dashboard which shows all trips that they have taken (either pending or approved). The dollar amount the user has spent on travel in the last year is also listed. Then the user can choose to book a new trip or add a new destination to the list of potential places to travel.
 
-![Main_Page_Go Nomad]
+![go-nomad-login](https://user-images.githubusercontent.com/18154724/192603701-0f362490-fb11-4cd0-978b-3bfc177c0da9.gif)
 
-To book a new trip the traveler can select their destination from a drop down, then select duration, number of travelers, and start date for the trip. They can click to get an estimate cost for trip, then either go back and edit the current trip, or book it! This posts the data to the local api behind the scenes and a success message is shown to the user. To add a new destination, a user must enter the city, country, estimated flights and lodging costs, a photo and some alt text for the photo. Upon successful addition, a success message is also shown to the user. This location is now available for booking new trips!
+To book a new trip the traveler can select their destination from a drop down, then select duration, number of travelers, and start date for the trip. They can click to get an estimate cost for trip, then either go back and edit the current trip, or book it! This posts the data to the local api behind the scenes and a success message is shown to the user. 
 
-![Book Trip](
+![book-trip-gif](https://user-images.githubusercontent.com/18154724/192603731-413b9c2d-9422-4aa4-b048-49c4abc39d4e.gif)
+
+To add a new destination, a user must enter the city, country, estimated flights and lodging costs, a photo and some alt text for the photo. Upon successful addition, a success message is also shown to the user. This location is now available for booking new trips!
+
+![Destination_Gif](https://user-images.githubusercontent.com/18154724/192603984-d7c4daf5-8202-464e-868b-6f74977b0fb0.gif)
 
 ## Setup
 1. Clone down this repo.
@@ -51,14 +45,6 @@ This project used JavaScript, HTML, and CSS. Test driven development using Mocha
 
 ## Contributors
 This solo project was built by [Nicole Forseth](https://github.com/forsethnico), a Front End Engineering student at Turing School of Software and Design.
-
-## Extra Info
-
-## Linting Your Code
-
-Run the command in your terminal `npm run lint` to run the linter on your JavaScript code. There will be errors and warnings right from the start in this starter kit - the linter is still running successfully.
-
-Your linter will look at the JavaScript files you have within the `src` directory and the `test` directory.
 
 ## Deploying to GitHub Pages
 
