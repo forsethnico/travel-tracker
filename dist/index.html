@@ -66,11 +66,13 @@
         <section class="trip-details" id="createTripForm">
           <section class="trip-input">
             <label for="destination" class="label">destination.</label><br>
-            <select placeholder="destination" id="destination" aria-label="destination-select" class = "destination-dropdown" name="destination" required></select>
+            <select placeholder="destination" id="destination" aria-label="destination-select" 
+            class = "destination-dropdown" name="destination" required></select>
           </section>
           <section class=trip-input>
             <label for="arrive" class="label">start date.</label><br>
-            <input type="date" placeholder="start date" id="tripStart" aria-label="calendar-select" name ="arrive" value ="2022-09-27" min="2020-01-03" required>
+            <input type="date" placeholder="start date" id="tripStart" aria-label="calendar-select" 
+            name ="arrive" value ="2022-09-27" min="2020-01-03" required>
           </section>
           <section class="trip-input">
             <label for="duration" class="label">days.</label><br>
@@ -113,8 +115,8 @@
         <button name="button" class = "button" id="addDestinationBtn" tabindex ="0">add destination.</button>
         <button type="reset" class = "button" id="clearDestinationBtn" tabindex ="0">start over.</button>
       </form>
-  </section>
-  <section class ="dest-success-message hidden"></section>
+    </section>
+    <section class ="dest-success-message hidden"></section>
   </section>
   <script src="bundle.js"></script>
   </body>

@@ -48,7 +48,7 @@ background-color: rgba(64, 85, 89, 0.8);
 width: 40vw;
 height: 55vh;
 border-radius: 30px;
-padding-bottom: 7vh;
+padding-bottom: 3vh;
 padding-top: 3vh;
 margin: 10vh 12vw 0vh 30vw;
 }
@@ -151,25 +151,22 @@ margin: 0vh 12vw 0vh 10vw;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 35vw;
+  width: 80vw;
   background-color:rgba(64, 85, 89, 0.8);
-  padding-bottom: 3vh;
-  padding-top: 1vh;
+  padding-bottom: 2vh;
+  padding-top: 2vh;
   border-radius: 30px;
   margin: 0vh 12vw 0vh 10vw;
 }
 
 .destination-details {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  align-items: center;
 }
 
 #estimateButton, #editBtn, #bookButton {
 margin-top: 21px;
-}
-
-#addDestinationBtn, #clearDestinationBtn {
-  margin-top: 21px;
 }
 
 .hidden {

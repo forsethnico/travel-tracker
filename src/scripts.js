@@ -1,6 +1,4 @@
 import "./css/styles.css";
-
-// An example of how you tell webpack to use an image (also need to link to it in the index.html)
 import "./images/background.jpg";
 import "./images/logo.png";
 import "./images/logo_transparent.png";
@@ -10,12 +8,7 @@ import Trip from "./Trip.js";
 import Destination from "./Destination.js";
 
 //Global Variables
-let tripData,
-  allTravelers,
-  destinationData,
-  trips,
-  destinations,
-  currentTraveler;
+let tripData, destinationData, allTravelers, trips, destinations, currentTraveler;
 
 //Query Selectors
 const greeting = document.querySelector(".greeting");
@@ -26,7 +19,6 @@ const startDate = document.querySelector("#tripStart");
 const usernameInput = document.querySelector("#username");
 const passwordInput = document.querySelector("#password");
 const errorMessage = document.querySelector(".error-message");
-
 
 //Buttons
 const loginBtn = document.querySelector("#loginBtn");
@@ -53,7 +45,7 @@ const successMessage = document.querySelector(".success-message");
 const destSuccessMessage = document.querySelector(".dest-success-message");
 
 //Event Listeners
-window.addEventListener("load", getAllTravelData);
+window.addEventListener("load", onLoad);
 loginBtn.addEventListener("click", logIn);
 logoutBtn.addEventListener("click", logOut);
 goDashboardBtn.addEventListener("click", showDashboard);
@@ -77,22 +69,18 @@ function getAllTravelData() {
     destinations = destinationData.map((destination) => {
       return new Destination(destination);
     });
-    //Remove when login page is enabled
-    //currentTraveler = new Traveler(allTravelers[8]);
-    showMainPage();
     setCurrentDate();
   });
 }
-
-// function onLoad() {
-//   getAllTravelData().then((responses) => {
-//     if (currentTraveler === undefined) {
-//       showMainPage();
-//     } else {
-//       showDashboard();
-//     }
-//   });
-// }
+function onLoad() {
+  getAllTravelData().then((responses) => {
+    if (currentTraveler === undefined) {
+      showMainPage();
+    } else {
+      showDashboard();
+    }
+  });
+}
 
 function setCurrentDate() {
   let currentDate = new Date().toJSON().slice(0, 10);
@@ -121,41 +109,41 @@ function showMainPage() {
 }
 
 function logIn(event) {
-    event.preventDefault();
-    const username = usernameInput.value
-    const password = passwordInput.value
-    if (!checkEmptyLogin(username, password)) {
-      try {
-        setUser(username, password);
-      } catch (error) {
-        errorMessage.innerText = error.message;
-      }
+  event.preventDefault();
+  const username = usernameInput.value;
+  const password = passwordInput.value;
+  if (!checkEmptyLogin(username, password)) {
+    try {
+      setUser(username, password);
+    } catch (error) {
+      errorMessage.innerText = error.message;
     }
   }
-  const checkEmptyLogin = (username, password) => {
-    let emptyFields = false;
-    if(username === "") {
-        emptyFields = true;
-    } 
-    if(password === "") {
-        emptyFields = true;
-    }
-    return emptyFields;
 }
+const checkEmptyLogin = (username, password) => {
+  let emptyFields = false;
+  if (username === "") {
+    emptyFields = true;
+  }
+  if (password === "") {
+    emptyFields = true;
+  }
+  return emptyFields;
+};
 
 function setUser(username, password) {
-    usernameInput.value = ""
-    passwordInput.value = ""
-    if(password !== "travel") {
-        throw new Error("Invalid password.")
-    }
-    if(!username.startsWith('traveler')) {
-        throw new Error("Invalid user name.")
-    }
-    let id = username.slice(8);
-    if (id.startsWith(0)) {
-    throw new Error("Invalid user name.")
-    } else if (id) {
+  usernameInput.value = "";
+  passwordInput.value = "";
+  if (password !== "travel") {
+    throw new Error("Invalid password.");
+  }
+  if (!username.startsWith("traveler")) {
+    throw new Error("Invalid user name.");
+  }
+  let id = username.slice(8);
+  if (id.startsWith(0)) {
+    throw new Error("Invalid user name.");
+  } else if (id) {
     fetchTraveler(id)
       .then((response) => {
         currentTraveler = new Traveler(response);
@@ -165,9 +153,9 @@ function setUser(username, password) {
         errorMessage.innerText = error.message;
       });
   } else {
-    throw new Error("Invalid user credentials.")
+    throw new Error("Invalid user credentials.");
   }
-} 
+}
 
 function logOut() {
   hide(dashboard);
@@ -456,7 +444,3 @@ const checkTripButtonState = () => {
     return true;
   }
 };
-
-
-
-    
