@@ -18,7 +18,6 @@ let tripData,
   currentTraveler;
 
 //Query Selectors
-const errorMessage = document.querySelector(".error-message");
 const greeting = document.querySelector(".greeting");
 const destinationChoice = document.querySelector("#destination");
 const travelerChoice = document.querySelector("#travelers");
@@ -26,6 +25,8 @@ const durationChoice = document.querySelector("#duration");
 const startDate = document.querySelector("#tripStart");
 const usernameInput = document.querySelector("#username");
 const passwordInput = document.querySelector("#password");
+const errorMessage = document.querySelector(".error-message");
+
 
 //Buttons
 const loginBtn = document.querySelector("#loginBtn");
@@ -52,7 +53,7 @@ const successMessage = document.querySelector(".success-message");
 const destSuccessMessage = document.querySelector(".dest-success-message");
 
 //Event Listeners
-window.addEventListener("load", onLoad);
+window.addEventListener("load", getAllTravelData);
 loginBtn.addEventListener("click", logIn);
 logoutBtn.addEventListener("click", logOut);
 goDashboardBtn.addEventListener("click", showDashboard);
@@ -77,20 +78,21 @@ function getAllTravelData() {
       return new Destination(destination);
     });
     //Remove when login page is enabled
-    currentTraveler = new Traveler(allTravelers[8]);
+    //currentTraveler = new Traveler(allTravelers[8]);
+    showMainPage();
     setCurrentDate();
   });
 }
 
-function onLoad() {
-  getAllTravelData().then((responses) => {
-    if (currentTraveler === null) {
-      showMainPage();
-    } else {
-      showBookTripPage();
-    }
-  });
-}
+// function onLoad() {
+//   getAllTravelData().then((responses) => {
+//     if (currentTraveler === undefined) {
+//       showMainPage();
+//     } else {
+//       showDashboard();
+//     }
+//   });
+// }
 
 function setCurrentDate() {
   let currentDate = new Date().toJSON().slice(0, 10);
@@ -119,19 +121,41 @@ function showMainPage() {
 }
 
 function logIn(event) {
-  event.preventDefault();
-  const username = usernameInput.value;
-  const password = passwordInput.value;
-  if (username === "" || password === "") {
-    errorMessage.innerText = `Please complete the form.`;
+    event.preventDefault();
+    const username = usernameInput.value
+    const password = passwordInput.value
+    if (!checkEmptyLogin(username, password)) {
+      try {
+        setUser(username, password);
+      } catch (error) {
+        errorMessage.innerText = error.message;
+      }
+    }
   }
-  if (password !== "travel") {
-    errorMessage.innerText = `Invalid user password.`;
-  }
-  const id = username.slice(8, usernameInput.value.length);
-  if (id.startsWith(0)) {
-    errorMessage.innerText = `Invalid user name.`;
-  } else if (id) {
+  const checkEmptyLogin = (username, password) => {
+    let emptyFields = false;
+    if(username === "") {
+        emptyFields = true;
+    } 
+    if(password === "") {
+        emptyFields = true;
+    }
+    return emptyFields;
+}
+
+function setUser(username, password) {
+    usernameInput.value = ""
+    passwordInput.value = ""
+    if(password !== "travel") {
+        throw new Error("Invalid password.")
+    }
+    if(!username.startsWith('traveler')) {
+        throw new Error("Invalid user name.")
+    }
+    let id = username.slice(8);
+    if (id.startsWith(0)) {
+    throw new Error("Invalid user name.")
+    } else if (id) {
     fetchTraveler(id)
       .then((response) => {
         currentTraveler = new Traveler(response);
@@ -141,9 +165,9 @@ function logIn(event) {
         errorMessage.innerText = error.message;
       });
   } else {
-    errorMessage.innerText = "";
+    throw new Error("Invalid user credentials.")
   }
-}
+} 
 
 function logOut() {
   hide(dashboard);
@@ -432,3 +456,7 @@ const checkTripButtonState = () => {
     return true;
   }
 };
+
+
+
+    
