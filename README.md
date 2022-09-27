@@ -1,94 +1,64 @@
-# Webpack Starter Kit
+# Travel Tracker - Go Nomad.
 
-## Clone This Repo
+## Table of Contents
+- [Introduction](#introduction)
+- [Links](#links)
+- [Learning Goals](#learning-goals)
+- [Features](#features)
+- [Setup](#setup)
+- [Future Additions](#future-additions)
+- [Technologies](#Technologies)
+- [Contributors](#contributors)
 
-That's right, _clone_ not fork. You will use this repo multiple times, but you can only fork a repository once. So here is what you need to do to clone the repo and still be able to push changes to your repo:
+## Introduction
+Travel Tracker is an application that manages and tracks trips for users. 
 
-1. Clone down this repo. Since you don't want to name your project "webpack-starter-kit", you can use an optional argument when you run `git clone` (you replace the `[...]` with the terminal command arguments): `git clone [remote-address] [what you want to name the repo]`
-1. Remove the default remote: `git remote rm origin` (notice that `git remote -v` not gives you back nothing)
-1. Create a new repo on GitHub with the name of `[what you want to name the repo]` to be consistent with naming
-1. Copy the address that you would use to clone down this repo - something like `git@github.com:...`
-1. Add this remote to your cloned down repo: `git remote add origin [address you copied in the previous step]` - do not include the brackets
+## Links
+- [Project spec](https://frontend.turing.edu/projects/travel-tracker.html)
+- [Project Board](https://github.com/users/forsethnico/projects/3)
 
-Now try to commit something (just add a line in the README) and push it up to your new repo. If everything is setup correctly, you should see the changes on GitHub.
+## Learning Goals 
+- Use OOP and drive design of the application and code. 
+- Implement a robust testing suite using TDD (test driven development).
+- Work with local server and make network requests to API endpoints to retrieve and manipulate data.
+- Ensure our app follows best practices for accessibility.
+- Utilize proper error handling for our users to ensure they get data and submit POST requests. 
+
+## Features
+The traveler(user) is directed to login using a username (such as "traveler50") and password("travel") to enter the website. Then the user is taken to their dashboard which shows all trips that they have taken (either pending or approved). The dollar amount the user has spent on travel in the last year is also listed. Then the user can choose to book a new trip or add a new destination to the list of potential places to travel. 
+
+![Main_Page_Go Nomad]
+
+To book a new trip the traveler can select their destination from a drop down, then select duration, number of travelers, and start date for the trip. They can click to get an estimate cost for trip, then either go back and edit the current trip, or book it! This posts the data to the local api behind the scenes and a success message is shown to the user. To add a new destination, a user must enter the city, country, estimated flights and lodging costs, a photo and some alt text for the photo. Upon successful addition, a success message is also shown to the user. This location is now available for booking new trips!
+
+![Book Trip](
 
 ## Setup
+1. Clone down this repo.
+3. Once you have cloned the repo, change into the directory and install the project dependencies. Run `npm install` to install project dependencies.
+4. Run `npm start` in the terminal to see the HTML page running in your browser on `http://localhost:8080/`. `Control + C` is the command to stop running the local server.  Closing the terminal without stopping the server first could allow the server to continue to run in the background and cause problems. This command is not specific to Webpack; make note of it for future use. 
+5. Clone the [Travel Tracker API](https://github.com/turingschool-examples/travel-tracker-api) to a separate folder, CD into it and run `npm install`. 
+6. The local server is now running on `https://localhost:3001/api/v1/trips` for example. Make sure to use `Control + C` to close the local server before closing the terminal when finished.
+7. Enjoy!
 
-After one person has gone through the steps of cloning down this repo and editing the remote, everyone should clone down the repo.
+## Future Additions
+- Adding functionality for a travel agent to go in and approve trips. 
+- Implementing Dayjs to be able to work with dates more easily. 
+- Adding functionality to delete booking.
 
-Then install the library dependencies. Run:
+## Technologies
+This project used JavaScript, HTML, and CSS. Test driven development using Mocha and Chai was also used. Accessibility was tested using LightHouse and  network requests were used to fetch information from an API. 
 
-```bash
-npm install
-```
+## Contributors
+This solo project was built by [Nicole Forseth](https://github.com/forsethnico), a Front End Engineering student at Turing School of Software and Design.
 
-To verify that it is setup correctly, run `npm start` in your terminal. Go to `http://localhost:8080/` and you should see a page with the Turing logo image and a beautiful gradient background. If that's the case, you're good to go. Enter `control + c` in your terminal to stop the server at any time.
-
-## Where to Add Your Code
-
-### JavaScript
-
-You have to be very intentional with where you add your feature code. This repo uses a tool called [webpack](https://webpack.js.org/) to combine many JavaScript files into one big file. Webpack enables you to have many, separate JavaScript files to keep your code organized and readable. Webpack expects all of your code files to be in a specific place, or else it doesn't know how to combine them all behind the scenes.
-
-**Create all of your feature code files in the `src` directory.**
-
-Since code is separated into multiple files, you need to use the `import` and `export` syntax to share code across file.
-
-Here is a video that walks through some information about [import and export](https://www.youtube.com/watch?v=_3oSWwapPKQ). There are a lot of resources out there about `import` and `export`, and resources will sometimes call them `ES6 modules`. It's something you will see in React and beyond.
-
-### HTML
-
-Add the HTML you need in the `index.html` file in the `./dist` directory. There is some boilerplate HTML that exists from the start that you can modify.
-
-### Images
-
-Add your image files in the `src/images` directory. Similar to CSS files, you need to `import` image files in the JavaScript entry file (`scripts.js`). Then go into the HTML and add an `img` element with the `src` attribute pointing to the `images` directory. There is an example in the `index.html` file for you to see.
-
-## How to View Your Code in Action
-
-In the terminal, run:
-
-```bash
-npm start
-```
-
-You will see a bunch of lines output to your terminal. One of those lines will be something like:
-
-```bash
-Project is running at http://localhost:8080/
-```
-
-Go to `http://localhost:8080/` in your browser to view your code running in the browser.
-
----
-
-## Test Files Organization
-
-Similar to feature code, your test code needs to be put in a specific place for it to run successfully.
-
-**Put all of your test files in the `test` directory.** As a convention, all test filenames should end with `-test.js`. For instance: `box-test.js`.
-
-## Running Your Tests
-
-Run your test suite using the command:
-
-```bash
-npm test
-```
-
-The test results will output to the terminal.
-
----
+## Extra Info
 
 ## Linting Your Code
 
 Run the command in your terminal `npm run lint` to run the linter on your JavaScript code. There will be errors and warnings right from the start in this starter kit - the linter is still running successfully.
 
 Your linter will look at the JavaScript files you have within the `src` directory and the `test` directory.
-
-## Webpack?
-
-If you look in the `package.json` file, you'll see one of the library dependencies called `webpack`. If you're interested in learning more about what Webpack is and how it works behind the scenes, take a look through the [Webpack configuration documentation](https://webpack.js.org/concepts/).
 
 ## Deploying to GitHub Pages
 
