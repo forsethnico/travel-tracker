@@ -87,7 +87,7 @@ function onLoad() {
     if (currentTraveler === null) {
       showMainPage();
     } else {
-      showCreateDestinationPage();
+      showBookTripPage();
     }
   });
 }
@@ -211,7 +211,7 @@ function displayUserTrips() {
             <h3>${destinationObj.destination}</h3>
             <h4>date: ${trip.date}</h4>
             <h4>status: ${trip.status}</h4>
-            <img class = "trip-photo" src=${destinationObj.image}/>
+            <img class = "trip-photo" src=${destinationObj.image} alt=${destinationObj.alt}/>
             </section>`;
     });
   }
@@ -231,6 +231,10 @@ function showDestinations() {
 }
 
 function estimateCost() {
+  if (!checkTripButtonState()) {
+    tripEstimate.innerHTML = `Please enter all required fields.`;
+    return;
+  }
   const selectedDate = getDate(startDate.value);
   const numTravelers = parseInt(travelerChoice.value);
   const selectedDuration = parseInt(durationChoice.value);
@@ -259,7 +263,12 @@ function editTrip() {
   tripEstimate.innerHTML = "";
 }
 
-function bookNewTrip() {
+function bookNewTrip(event) {
+  event.preventDefault();
+  if (!checkTripButtonState()) {
+    tripEstimate.innerHTML = `Please enter all required fields.`;
+    return;
+  }
   let sortedTripsByID = trips.sort((a, b) => {
     return b.id - a.id;
   });
@@ -314,10 +323,14 @@ function displayTripSuccessMessage(message, newTrip) {
   const newTripObj = new Trip(newTrip);
   const destinationObj = newTripObj.getDestinationInfo(destinations);
   successMessage.innerHTML = `<section class="just-booked"><p>${message}.<br> Congrats! <br>Your trip to ${destinationObj.destination} is pending approval!</p>
-  <img class ="new-trip-photo" src= ${destinationObj.image}</section>`;
+  <img class ="new-trip-photo" src= ${destinationObj.image} alt=${destinationObj.alt}</section>`;
 }
 
-function addNewDestination() {
+function addNewDestination(event) {
+  event.preventDefault();
+  if (!checkDestinationButtonState()) {
+    return;
+  }
   const sortedDestinationsByID = destinations.sort((a, b) => {
     return b.id - a.id;
   });
@@ -371,7 +384,7 @@ function showCreateDestinationPage() {
 function displayDestSuccessMessage(message, newDestination) {
   const newDestObj = new Destination(newDestination);
   destSuccessMessage.innerHTML = `<section class="just-booked"><p>${message}. <br>
-    You added info for ${newDestObj.destination} to the list of locales. Go book a new trip!</p><img class = "new-trip-photo" src=${newDestObj.image}</section>`;
+    You added info for ${newDestObj.destination} to the list of locales. Go book a new trip!</p><img class = "new-trip-photo" src=${newDestObj.image} alt=${newDestObj.alt}</section>`;
 }
 
 function showNewDestination() {
@@ -391,3 +404,31 @@ function resetForm() {
   const destinationForm = document.getElementById("destinationForm");
   destinationForm.reset();
 }
+
+const checkDestinationButtonState = () => {
+  if (
+    city.value === "" ||
+    country.value === "" ||
+    lodging.value === "" ||
+    flight.value === "" ||
+    image.value === "" ||
+    alt.value === ""
+  ) {
+    return false;
+  } else {
+    return true;
+  }
+};
+
+const checkTripButtonState = () => {
+  if (
+    tripStart.value === "" ||
+    destination.value === "" ||
+    duration.value === "" ||
+    travelers.value === ""
+  ) {
+    return false;
+  } else {
+    return true;
+  }
+};
