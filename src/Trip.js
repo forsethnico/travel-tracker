@@ -19,8 +19,8 @@ class Trip {
     let totalFlightCost =
       foundDestination.estimatedFlightCostPerPerson * this.travelers;
     let expenses = totalFlightCost + totalLodgingCost;
-    let agentFee = expenses * 0.1
-    let tripCost = expenses + agentFee
+    let agentFee = expenses * 0.1;
+    let tripCost = expenses + agentFee;
     return tripCost;
   }
 
