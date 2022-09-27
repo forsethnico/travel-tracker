@@ -4,11 +4,12 @@ import Traveler from "../src/Traveler";
 import { travelers, trips, destinations } from "./Traveler-data.js";
 
 describe("Traveler", () => {
-  let traveler1, traveler2;
+  let traveler1, traveler2, traveler3;
 
   beforeEach(() => {
     traveler1 = new Traveler(travelers[0]);
     traveler2 = new Traveler(travelers[1]);
+    traveler3 = new Traveler(travelers[2]);
   });
   it("should have a traveler id", () => {
     expect(traveler1.id).to.equal(1);
@@ -48,10 +49,24 @@ describe("Traveler", () => {
         status: "pending",
         suggestedActivities: [],
       },
+      {
+        id: 177,
+        userID: 2,
+        destinationID: 20,
+        travelers: 6,
+        date: "2022/01/29",
+        duration: 8,
+        status: "approved",
+        suggestedActivities: [],
+      },
     ]);
   });
 
-  it('should have method to find all pending trips', () => {
+  it("should return empty array if the user has no trips", () => {
+    expect(traveler3.getAllTrips(trips)).to.deep.equal([])
+  });
+
+  it("should have method to find all pending trips", () => {
     expect(traveler2.getPendingTrips(trips)).to.deep.equal([
       {
         id: 171,
@@ -62,11 +77,25 @@ describe("Traveler", () => {
         duration: 18,
         status: "pending",
         suggestedActivities: [],
-      }
-    ])
+      },
+    ]);
   });
 
-  it("should have a method to get all trip expenses for a given user", () => {
-    expect(traveler2.getAllExpenses(trips, destinations)).to.equal(13172.5);
+  it("should have a method to get all trip expenses for a year for a given user", () => {
+    let currentDateObj = new Date("2022/09/26");
+    let startDateObj = new Date(currentDateObj.getTime());
+    startDateObj.setDate(currentDateObj.getDate() - 365);
+    expect(
+      traveler2.getAllExpensesForYear(trips, destinations, currentDateObj)
+    ).to.equal(3205.4);
+  });
+
+  it("should return expenses as 0 if user has no trips within the past year", () => {
+    let currentDateObj = new Date("2022/09/26");
+    let startDateObj = new Date(currentDateObj.getTime());
+    startDateObj.setDate(currentDateObj.getDate() - 365);
+    expect(
+      traveler1.getAllExpensesForYear(trips, destinations, currentDateObj)
+    ).to.equal(0);
   });
 });

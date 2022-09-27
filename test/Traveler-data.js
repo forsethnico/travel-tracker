@@ -57,6 +57,16 @@ const trips = [
     status: "pending",
     suggestedActivities: [],
   },
+  {
+    id: 177,
+    userID: 2,
+    destinationID: 20,
+    travelers: 6,
+    date: "2022/01/29",
+    duration: 8,
+    status: "approved",
+    suggestedActivities: [ ]
+    }
 ];
 
 const destinations = [
@@ -69,6 +79,14 @@ const destinations = [
       "https://images.unsplash.com/photo-1524396309943-e03f5249f002?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1567&q=80",
     alt: "city during the day time with eiffel tower",
   },
+  {
+    id: 20,
+    destination: "Miami, Florida",
+    estimatedLodgingCostPerDay: 158,
+    estimatedFlightCostPerPerson: 275,
+    image: "https://images.unsplash.com/photo-1514214246283-d427a95c5d2f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1573&q=80",
+    alt: "sand with palm trees and tall buildings in the background"
+    },
   {
     id: 43,
     destination: "Nassau, The Bahamas",
